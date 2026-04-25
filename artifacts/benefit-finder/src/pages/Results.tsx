@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { EligibilityResult } from "@workspace/api-client-react";
 import { SchemeCard } from "@/components/SchemeCard";
+import { DocumentChecklist } from "@/components/DocumentChecklist";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { CheckCircle2, FileText, ArrowRight, Download, RefreshCcw, AlertCircle } from "lucide-react";
+import { CheckCircle2, FileText, ArrowRight, Download, RefreshCcw, AlertCircle, ListChecks } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function Results() {
@@ -83,6 +84,16 @@ export function Results() {
         </div>
         
         <div className="flex items-center gap-3 shrink-0">
+          <Button
+            variant="outline"
+            onClick={() => {
+              const el = document.getElementById("documents-checklist");
+              if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+            className="bg-white/50 backdrop-blur"
+          >
+            <ListChecks className="mr-2" size={16} /> Documents Checklist
+          </Button>
           <Button variant="outline" onClick={handlePrint} className="bg-white/50 backdrop-blur">
             <Download className="mr-2" size={16} /> Download Report
           </Button>
@@ -91,6 +102,8 @@ export function Results() {
           </Link>
         </div>
       </div>
+
+      <DocumentChecklist matches={result.matches} />
 
       <div className="space-y-8">
         {result.matches.sort((a, b) => b.matchScore - a.matchScore).map((match, index) => (
