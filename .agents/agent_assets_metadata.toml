@@ -1,0 +1,20 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "346W7VEgu6K55aUyyA-97"
+uri = "file://artifacts/benefit-finder/public/hero-illustration.png"
+type = "image"
+title = "Hero illustration Indian student family"
+
+[[generated]]
+id = "OEGV1-f0KTX0FFDAeKQ8t"
+uri = "file://artifacts/benefit-finder/public/student-illustration.png"
+type = "image"
+title = "Indian student illustration"
+
+[[generated]]
+id = "CggARdxhLJ-i1vANIlK9I"
+uri = "file://artifacts/benefit-finder/public/farmer-illustration.png"
+type = "image"
+title = "Indian farmer illustration"

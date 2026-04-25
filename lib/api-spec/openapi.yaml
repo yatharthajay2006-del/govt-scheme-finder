@@ -3,13 +3,19 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: AI Benefit Finder API — discover government schemes for Indian citizens
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: schemes
+    description: Government schemes catalog
+  - name: eligibility
+    description: Eligibility checking
+  - name: stats
+    description: Aggregate statistics for dashboards
 paths:
   /healthz:
     get:
@@ -24,6 +30,208 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /schemes:
+    get:
+      operationId: listSchemes
+      tags: [schemes]
+      summary: List all government schemes
+      description: Returns the catalog of all government schemes, optionally filtered by category or search text.
+      parameters:
+        - in: query
+          name: category
+          required: false
+          schema:
+            type: string
+          description: Filter by scheme category (e.g. scholarship, healthcare, ration, pension, employment, housing, agriculture, women)
+        - in: query
+          name: search
+          required: false
+          schema:
+            type: string
+          description: Free-text search across scheme name, description and tags
+      responses:
+        "200":
+          description: List of schemes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Scheme"
+    post:
+      operationId: createScheme
+      tags: [schemes]
+      summary: Create a new scheme (admin)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SchemeInput"
+      responses:
+        "200":
+          description: Created scheme
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Scheme"
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /schemes/popular:
+    get:
+      operationId: listPopularSchemes
+      tags: [schemes]
+      summary: List most popular schemes
+      description: Returns a curated list of the most popular schemes for the homepage.
+      responses:
+        "200":
+          description: Popular schemes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Scheme"
+
+  /schemes/{id}:
+    get:
+      operationId: getScheme
+      tags: [schemes]
+      summary: Get a scheme by id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Scheme detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Scheme"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    patch:
+      operationId: updateScheme
+      tags: [schemes]
+      summary: Update a scheme (admin)
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SchemeInput"
+      responses:
+        "200":
+          description: Updated scheme
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Scheme"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      operationId: deleteScheme
+      tags: [schemes]
+      summary: Delete a scheme (admin)
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteResult"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /eligibility/check:
+    post:
+      operationId: checkEligibility
+      tags: [eligibility]
+      summary: Run an eligibility check
+      description: Accepts a profile and returns matched schemes with explanations of why each one matched.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EligibilityProfile"
+      responses:
+        "200":
+          description: Eligibility results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EligibilityResult"
+
+  /eligibility/parse-voice:
+    post:
+      operationId: parseVoiceInput
+      tags: [eligibility]
+      summary: Parse a free-form voice/text description into a partial profile
+      description: |
+        Accepts a free-form natural language description (English or Hindi transliteration)
+        like "I am a 19 year old student from Uttar Pradesh and my father is a farmer"
+        and returns a partial eligibility profile with the fields it could extract.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VoiceParseRequest"
+      responses:
+        "200":
+          description: Parsed profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VoiceParseResult"
+
+  /stats/overview:
+    get:
+      operationId: getStatsOverview
+      tags: [stats]
+      summary: Aggregate stats for the homepage and admin dashboard
+      responses:
+        "200":
+          description: Stats overview
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatsOverview"
+
 components:
   schemas:
     HealthStatus:
@@ -31,6 +239,296 @@ components:
       properties:
         status:
           type: string
-      required:
-        - status
+      required: [status]
 
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required: [error]
+
+    DeleteResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        id:
+          type: integer
+      required: [success, id]
+
+    SchemeCategory:
+      type: string
+      enum:
+        - scholarship
+        - healthcare
+        - ration
+        - pension
+        - employment
+        - housing
+        - agriculture
+        - women
+        - disability
+        - other
+
+    EligibilityRule:
+      type: object
+      description: A single eligibility rule. Profile must satisfy ALL rules to qualify for the scheme.
+      properties:
+        field:
+          type: string
+          description: Field on the profile (age, income, isStudent, isFarmer, gender, hasRationCard, hasDisability, employmentStatus, isSeniorCitizen, casteCategory, state, educationLevel)
+        operator:
+          type: string
+          enum: [eq, neq, lt, lte, gt, gte, in, nin, true, false]
+        value:
+          description: Comparison value (string, number, boolean, or string array depending on operator)
+        label:
+          type: string
+          description: Human-friendly label shown to user when this rule matches (e.g. "You are a student")
+      required: [field, operator, label]
+
+    Scheme:
+      type: object
+      properties:
+        id:
+          type: integer
+        slug:
+          type: string
+        name:
+          type: string
+        nameHindi:
+          type: ["string", "null"]
+        category:
+          $ref: "#/components/schemas/SchemeCategory"
+        ministry:
+          type: ["string", "null"]
+          description: Issuing ministry or department
+        shortDescription:
+          type: string
+        description:
+          type: string
+        benefits:
+          type: array
+          items:
+            type: string
+        requiredDocuments:
+          type: array
+          items:
+            type: string
+        applySteps:
+          type: array
+          items:
+            type: string
+        officialLink:
+          type: string
+        applicableStates:
+          type: array
+          description: Empty array means all-India. Otherwise list of state names.
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        eligibilityRules:
+          type: array
+          items:
+            $ref: "#/components/schemas/EligibilityRule"
+        eligibilitySummary:
+          type: string
+          description: Plain-language eligibility summary for display
+        popularity:
+          type: integer
+          description: Higher = more popular. Used for ordering popular schemes.
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - slug
+        - name
+        - category
+        - shortDescription
+        - description
+        - benefits
+        - requiredDocuments
+        - applySteps
+        - officialLink
+        - applicableStates
+        - tags
+        - eligibilityRules
+        - eligibilitySummary
+        - popularity
+        - createdAt
+
+    SchemeInput:
+      type: object
+      properties:
+        slug:
+          type: string
+        name:
+          type: string
+        nameHindi:
+          type: ["string", "null"]
+        category:
+          $ref: "#/components/schemas/SchemeCategory"
+        ministry:
+          type: ["string", "null"]
+        shortDescription:
+          type: string
+        description:
+          type: string
+        benefits:
+          type: array
+          items:
+            type: string
+        requiredDocuments:
+          type: array
+          items:
+            type: string
+        applySteps:
+          type: array
+          items:
+            type: string
+        officialLink:
+          type: string
+        applicableStates:
+          type: array
+          items:
+            type: string
+        tags:
+          type: array
+          items:
+            type: string
+        eligibilityRules:
+          type: array
+          items:
+            $ref: "#/components/schemas/EligibilityRule"
+        eligibilitySummary:
+          type: string
+        popularity:
+          type: integer
+      required:
+        - slug
+        - name
+        - category
+        - shortDescription
+        - description
+        - benefits
+        - requiredDocuments
+        - applySteps
+        - officialLink
+        - applicableStates
+        - tags
+        - eligibilityRules
+        - eligibilitySummary
+
+    EligibilityProfile:
+      type: object
+      properties:
+        name:
+          type: ["string", "null"]
+        age:
+          type: ["integer", "null"]
+        gender:
+          type: ["string", "null"]
+          description: "male | female | other"
+        state:
+          type: ["string", "null"]
+        isStudent:
+          type: ["boolean", "null"]
+        educationLevel:
+          type: ["string", "null"]
+          description: "school | undergraduate | postgraduate | none"
+        annualIncome:
+          type: ["integer", "null"]
+          description: Family annual income in INR
+        casteCategory:
+          type: ["string", "null"]
+          description: "general | obc | sc | st | minority"
+        hasDisability:
+          type: ["boolean", "null"]
+        isFarmer:
+          type: ["boolean", "null"]
+        employmentStatus:
+          type: ["string", "null"]
+          description: "employed | unemployed | self_employed | student"
+        hasRationCard:
+          type: ["boolean", "null"]
+        isSeniorCitizen:
+          type: ["boolean", "null"]
+      required: []
+
+    EligibilityMatch:
+      type: object
+      properties:
+        scheme:
+          $ref: "#/components/schemas/Scheme"
+        matchedReasons:
+          type: array
+          items:
+            type: string
+        matchScore:
+          type: integer
+          description: 0-100 confidence/coverage score
+      required: [scheme, matchedReasons, matchScore]
+
+    EligibilityResult:
+      type: object
+      properties:
+        profile:
+          $ref: "#/components/schemas/EligibilityProfile"
+        totalMatched:
+          type: integer
+        matches:
+          type: array
+          items:
+            $ref: "#/components/schemas/EligibilityMatch"
+      required: [profile, totalMatched, matches]
+
+    VoiceParseRequest:
+      type: object
+      properties:
+        text:
+          type: string
+        language:
+          type: ["string", "null"]
+          description: "en | hi"
+      required: [text]
+
+    VoiceParseResult:
+      type: object
+      properties:
+        profile:
+          $ref: "#/components/schemas/EligibilityProfile"
+        extractedFields:
+          type: array
+          items:
+            type: string
+          description: Names of profile fields that were detected
+      required: [profile, extractedFields]
+
+    CategoryCount:
+      type: object
+      properties:
+        category:
+          $ref: "#/components/schemas/SchemeCategory"
+        count:
+          type: integer
+      required: [category, count]
+
+    StatsOverview:
+      type: object
+      properties:
+        totalSchemes:
+          type: integer
+        totalChecks:
+          type: integer
+        totalStatesCovered:
+          type: integer
+        byCategory:
+          type: array
+          items:
+            $ref: "#/components/schemas/CategoryCount"
+      required: [totalSchemes, totalChecks, totalStatesCovered, byCategory]

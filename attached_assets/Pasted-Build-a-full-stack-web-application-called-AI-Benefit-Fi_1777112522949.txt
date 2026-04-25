@@ -1,0 +1,343 @@
+Build a full-stack web application called **AI Benefit Finder** focused on helping **students and low-income families in India** discover government schemes, scholarships, healthcare benefits, ration support, pension schemes, and employment support they are eligible for.
+
+The platform should be simple, multilingual, voice-friendly, and designed for people with low digital literacy.
+
+## Core Goal
+
+Users should be able to answer a few simple questions (or speak in Hindi/local language), and the system should tell them:
+
+1. Which government schemes they are eligible for
+2. Why they are eligible
+3. What documents are required
+4. How to apply step-by-step
+5. Direct official apply links
+
+The system should feel like a smart assistant, not a complex government portal.
+
+---
+
+## Target Users
+
+Primary users:
+
+* Students looking for scholarships
+* Low-income families needing ration/healthcare support
+* Farmers needing subsidy schemes
+* Women welfare scheme applicants
+* Elderly users for pension/healthcare support
+* Job seekers looking for employment schemes
+
+For MVP, prioritize:
+
+### Students + Low-income families
+
+---
+
+## Required Features
+
+### 1. Beautiful Homepage
+
+Create a clean modern homepage with:
+
+Headline:
+
+“Find Government Benefits in 2 Minutes”
+
+Subheadline:
+
+“Discover scholarships, healthcare, ration support, pensions, and welfare schemes you qualify for.”
+
+CTA button:
+
+“Check Eligibility”
+
+Sections:
+
+* How it works
+* Popular schemes
+* Why this platform matters
+* Testimonials section
+* FAQ section
+* Footer
+
+Design should be modern, professional, startup-quality, and hackathon-winning.
+
+---
+
+### 2. Eligibility Checker Form
+
+Build a smart eligibility form asking:
+
+* Name
+* Age
+* Gender
+* State
+* Student status
+* Education level
+* Family annual income
+* Caste category
+* Disability status
+* Farmer status
+* Employment status
+* Family ration card status
+* Senior citizen status
+
+Use clean UI with progress indicator.
+
+Make form simple and mobile-friendly.
+
+---
+
+### 3. Voice Input Support
+
+Add voice input using browser speech recognition.
+
+Users should be able to say:
+
+“I am a 19-year-old student from Uttar Pradesh and my father is a farmer”
+
+System should extract details automatically and fill form fields.
+
+Support:
+
+* Hindi
+* English
+
+Voice-first UX is very important.
+
+---
+
+### 4. AI Eligibility Engine
+
+Create rule-based eligibility matching first.
+
+Examples:
+
+IF income < 2 lakh AND student = yes
+→ show scholarship schemes
+
+IF ration card = yes
+→ show food security schemes
+
+IF farmer = yes
+→ show subsidy schemes
+
+Do not overcomplicate with advanced AI first.
+
+Use clean structured logic.
+
+---
+
+### 5. Government Scheme Database
+
+Create a starter database containing schemes like:
+
+* National Scholarship Portal
+* PMAY
+* Ayushman Bharat
+* PM Kisan
+* Ration Card Benefits
+* Widow Pension
+* Senior Citizen Pension
+* Skill India
+* Startup India
+* Women Welfare Schemes
+
+Each scheme should contain:
+
+* Scheme name
+* Description
+* Eligibility criteria
+* Required documents
+* Official apply link
+* State-specific support if applicable
+
+Store in MongoDB or Firebase.
+
+---
+
+### 6. Results Page
+
+After eligibility check, show:
+
+“You are eligible for these schemes”
+
+For each scheme show:
+
+* Scheme name
+* Why eligible
+* Benefits summary
+* Required documents
+* Apply now button
+* Save for later option
+
+UI should be excellent.
+
+---
+
+### 7. Step-by-Step Apply Guide
+
+Each scheme should have:
+
+“How to Apply”
+
+with clear steps like:
+
+Step 1 → Get Aadhaar
+Step 2 → Income Certificate
+Step 3 → Visit official portal
+Step 4 → Upload documents
+
+Make this beginner-friendly.
+
+---
+
+### 8. Multilingual Support
+
+Add:
+
+* English
+* Hindi
+
+Make architecture ready for:
+
+* Bengali
+* Marathi
+* Tamil
+* Telugu
+
+Language switcher required.
+
+---
+
+### 9. Authentication
+
+Use Firebase Auth or similar.
+
+Allow:
+
+* User signup/login
+* Save eligibility reports
+* Saved schemes dashboard
+
+---
+
+### 10. Admin Panel
+
+Create admin dashboard where admin can:
+
+* Add new schemes
+* Edit schemes
+* Remove schemes
+* Update eligibility rules
+
+Simple but functional.
+
+---
+
+### 11. PDF Summary Download
+
+Allow users to download a PDF report of:
+
+Eligible schemes + required documents + apply steps
+
+Very useful for real-world use.
+
+---
+
+### 12. WhatsApp-style Assistant UI (Optional Bonus)
+
+Create assistant chat UI where users can ask:
+
+“Which scholarship can I get?”
+
+and receive smart responses.
+
+This will make the project look very strong for hackathons.
+
+---
+
+## Recommended Tech Stack
+
+Frontend:
+
+* Next.js
+* React
+* Tailwind CSS
+* Framer Motion
+
+Backend:
+
+* Node.js
+* Express.js
+
+Database:
+
+* MongoDB Atlas
+
+Authentication:
+
+* Firebase Auth
+
+Voice Recognition:
+
+* Web Speech API
+
+AI/NLP:
+
+* OpenAI API or Gemini API
+
+Deployment:
+
+* Vercel
+
+Make code production-ready and clean.
+
+---
+
+## UI/UX Expectations
+
+Very important:
+
+Do NOT make it look like a basic student project.
+
+Make it look like a real startup product.
+
+Use:
+
+* beautiful cards
+* modern dashboard
+* smooth animations
+* strong mobile responsiveness
+* clean typography
+* soft shadows
+* premium landing page design
+* professional SaaS feel
+
+This should look hackathon-winning.
+
+---
+
+## Extra Important
+
+Focus on:
+
+REAL usability + social impact
+
+Not just fancy AI.
+
+This project should feel like it can actually help poor families and students.
+
+It should solve a real problem.
+
+---
+
+## Final Goal
+
+Build something that looks like:
+
+“India’s AI-powered Government Benefit Discovery Platform”
+
+with startup-level quality and strong hackathon presentation potential.
+
+Generate complete codebase with frontend + backend + database structure + good folder architecture + deploy-ready setup.
