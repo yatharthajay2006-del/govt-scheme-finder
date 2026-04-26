@@ -116,6 +116,8 @@ export function SchemeDetail() {
 
           <div className="mb-8 max-w-3xl">
             <ApplicationStatusCard
+              schemeName={scheme.name}
+              schemeUrl={scheme.officialLink}
               applicationStartDate={scheme.applicationStartDate ?? null}
               applicationEndDate={scheme.applicationEndDate ?? null}
             />

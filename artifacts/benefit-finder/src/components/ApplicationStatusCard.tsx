@@ -6,7 +6,11 @@ import {
   XCircle,
   CalendarDays,
   Infinity as InfinityIcon,
+  CalendarPlus,
+  BellRing,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 type StatusKind =
   | "always_open"
@@ -16,8 +20,91 @@ type StatusKind =
   | "closed";
 
 interface Props {
+  schemeName: string;
+  schemeUrl?: string | null;
   applicationStartDate: string | null;
   applicationEndDate: string | null;
+}
+
+function pad(n: number): string {
+  return n.toString().padStart(2, "0");
+}
+
+function toIcsDate(iso: string): string {
+  // All-day events use YYYYMMDD format
+  const d = new Date(iso);
+  return `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}`;
+}
+
+function addDays(iso: string, days: number): string {
+  const d = new Date(iso);
+  d.setUTCDate(d.getUTCDate() + days);
+  return d.toISOString().slice(0, 10);
+}
+
+function escapeIcs(s: string): string {
+  return s.replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
+}
+
+function buildIcs(opts: {
+  uid: string;
+  title: string;
+  description: string;
+  startDate: string;
+  endDate?: string;
+  url?: string | null;
+}): string {
+  const dtStamp =
+    new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  const dtStart = toIcsDate(opts.startDate);
+  // For all-day events, DTEND is exclusive (next day)
+  const dtEnd = opts.endDate
+    ? toIcsDate(addDays(opts.endDate, 1))
+    : toIcsDate(addDays(opts.startDate, 1));
+
+  const lines = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Benefit Finder//Application Reminder//EN",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    "BEGIN:VEVENT",
+    `UID:${opts.uid}@benefit-finder`,
+    `DTSTAMP:${dtStamp}`,
+    `DTSTART;VALUE=DATE:${dtStart}`,
+    `DTEND;VALUE=DATE:${dtEnd}`,
+    `SUMMARY:${escapeIcs(opts.title)}`,
+    `DESCRIPTION:${escapeIcs(opts.description)}`,
+    opts.url ? `URL:${escapeIcs(opts.url)}` : "",
+    "BEGIN:VALARM",
+    "TRIGGER:-P1D",
+    "ACTION:DISPLAY",
+    `DESCRIPTION:${escapeIcs(opts.title)}`,
+    "END:VALARM",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].filter(Boolean);
+  return lines.join("\r\n");
+}
+
+function downloadIcs(filename: string, contents: string) {
+  const blob = new Blob([contents], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function slugify(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 50);
 }
 
 function startOfDay(d: Date): Date {
@@ -152,10 +239,13 @@ const STYLE: Record<
 };
 
 export function ApplicationStatusCard({
+  schemeName,
+  schemeUrl,
   applicationStartDate,
   applicationEndDate,
 }: Props) {
   const [today, setToday] = useState<Date>(() => new Date());
+  const { toast } = useToast();
 
   useEffect(() => {
     // Refresh roughly once per minute so the countdown stays current
@@ -168,6 +258,38 @@ export function ApplicationStatusCard({
   const { kind, daysLeft, daysToStart } = computeStatus(start, end, today);
   const style = STYLE[kind];
   const Icon = style.icon;
+
+  const handleAddReminder = (mode: "start" | "end") => {
+    const isStart = mode === "start";
+    const dateIso = isStart ? applicationStartDate : applicationEndDate;
+    if (!dateIso) return;
+    const title = isStart
+      ? `${schemeName} — Application Opens`
+      : `${schemeName} — Last Date to Apply`;
+    const description = isStart
+      ? `Application window for "${schemeName}" opens today. Visit the official portal to apply.${schemeUrl ? `\\n\\nOfficial link: ${schemeUrl}` : ""}`
+      : `Last date to apply for "${schemeName}". Submit your application before end of day.${schemeUrl ? `\\n\\nOfficial link: ${schemeUrl}` : ""}`;
+    const ics = buildIcs({
+      uid: `${slugify(schemeName)}-${mode}-${dateIso}`,
+      title,
+      description,
+      startDate: dateIso,
+      url: schemeUrl ?? null,
+    });
+    const filename = `${slugify(schemeName)}-${mode === "start" ? "opens" : "deadline"}.ics`;
+    downloadIcs(filename, ics);
+    toast({
+      title: "Reminder downloaded",
+      description: isStart
+        ? `Open the .ics file to add the start date to your calendar. You'll get a notification 1 day before ${fmt(dateIso)}.`
+        : `Open the .ics file to add the deadline to your calendar. You'll get a notification 1 day before ${fmt(dateIso)}.`,
+    });
+  };
+
+  const showStartReminder =
+    !!applicationStartDate && (kind === "starting_soon" || kind === "open_now");
+  const showEndReminder =
+    !!applicationEndDate && (kind === "open_now" || kind === "starting_soon");
 
   return (
     <div
@@ -245,6 +367,45 @@ export function ApplicationStatusCard({
           {kind !== "open_now" && (
             <div className="mt-3 text-[11px] text-muted-foreground">
               Status auto-refreshes based on your current date.
+            </div>
+          )}
+
+          {(showStartReminder || showEndReminder) && (
+            <div className="mt-4 pt-4 border-t border-border/40">
+              <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                <BellRing className="w-3.5 h-3.5" />
+                Notify me when this opens / closes
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {showStartReminder && (
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    className="gap-2 bg-white/70 dark:bg-black/20"
+                    onClick={() => handleAddReminder("start")}
+                  >
+                    <CalendarPlus className="w-4 h-4" />
+                    Remind me when it opens
+                  </Button>
+                )}
+                {showEndReminder && (
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    className="gap-2 bg-white/70 dark:bg-black/20"
+                    onClick={() => handleAddReminder("end")}
+                  >
+                    <CalendarPlus className="w-4 h-4" />
+                    Remind me before deadline
+                  </Button>
+                )}
+              </div>
+              <div className="text-[11px] text-muted-foreground mt-2">
+                Downloads a calendar file (.ics) — works with Google Calendar, Apple Calendar,
+                Outlook, and your phone. You'll get a notification 1 day before.
+              </div>
             </div>
           )}
         </div>
