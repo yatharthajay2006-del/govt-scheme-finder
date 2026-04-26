@@ -7,6 +7,7 @@ import { ArrowLeft, ExternalLink, Building, CheckCircle, FileText, ListOrdered, 
 import { Link } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useI18n } from "@/lib/i18n";
+import { ApplicationStatusCard } from "@/components/ApplicationStatusCard";
 
 export function SchemeDetail() {
   const [match, params] = useRoute("/schemes/:id");
@@ -112,6 +113,13 @@ export function SchemeDetail() {
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8 max-w-3xl">
             {scheme.description}
           </p>
+
+          <div className="mb-8 max-w-3xl">
+            <ApplicationStatusCard
+              applicationStartDate={scheme.applicationStartDate ?? null}
+              applicationEndDate={scheme.applicationEndDate ?? null}
+            />
+          </div>
 
           <Button size="lg" className="rounded-full shadow-lg px-8 bg-gradient-to-r from-primary to-secondary" onClick={() => window.open(scheme.officialLink, '_blank')}>
             Apply on Official Portal <ExternalLink size={18} className="ml-2" />

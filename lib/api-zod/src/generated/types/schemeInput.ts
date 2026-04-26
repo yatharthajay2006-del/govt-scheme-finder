@@ -31,4 +31,8 @@ export interface SchemeInput {
   isCentralScheme?: boolean | null;
   /** @nullable */
   lastUpdated?: string | null;
+  /** @nullable */
+  applicationStartDate?: string | null;
+  /** @nullable */
+  applicationEndDate?: string | null;
 }

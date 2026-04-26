@@ -124,6 +124,8 @@ export function serializeScheme(s: SchemeRow) {
     popularity: s.popularity,
     isCentralScheme: (s.isCentralScheme ?? 1) === 1,
     lastUpdated: s.lastUpdated ?? null,
+    applicationStartDate: s.applicationStartDate ?? null,
+    applicationEndDate: s.applicationEndDate ?? null,
     createdAt: s.createdAt.toISOString(),
   };
 }

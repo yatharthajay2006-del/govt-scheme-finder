@@ -36,9 +36,30 @@ type Seed = {
   eligibilitySummary: string;
   popularity: number;
   lastUpdated?: string;
+  applicationStartDate?: string | null;
+  applicationEndDate?: string | null;
 };
 
 const DEFAULT_LAST_UPDATED = "2026-01-20";
+
+// Real annual application windows for cycle-based schemes.
+// Slugs not listed here remain "Always Open" (no fixed deadline).
+const APPLICATION_WINDOWS: Record<string, { start: string; end: string }> = {
+  // National Scholarship Portal — pre/post-matric cycle for academic year 2026-27
+  "national-scholarship-portal": { start: "2026-07-01", end: "2026-10-31" },
+  // INSPIRE Scholarship for Higher Education — annual application window
+  "inspire-scholarship": { start: "2026-06-15", end: "2026-10-15" },
+  // PM Special Scholarship Scheme for J&K and Ladakh — annual cycle
+  "jk-pmsss": { start: "2026-06-15", end: "2026-08-31" },
+  // Pragati Scholarship for Girls (AICTE) — annual cycle
+  "pragati-scholarship-girls": { start: "2026-09-01", end: "2026-11-30" },
+  // Saksham Scholarship for Disabled (AICTE) — annual cycle
+  "saksham-scholarship-disabled": { start: "2026-09-01", end: "2026-11-30" },
+  // CBSE Single Girl Child Scholarship — annual cycle (announced after CBSE results)
+  "cbse-single-girl-child": { start: "2026-09-15", end: "2026-10-31" },
+  // National Means-cum-Merit Scholarship — annual exam cycle
+  "national-means-merit-scholarship": { start: "2026-08-01", end: "2026-10-15" },
+};
 
 const SCHEMES: Seed[] = [
   {
@@ -3234,6 +3255,14 @@ async function main() {
       popularity: s.popularity,
       isCentralScheme: s.applicableStates.length === 0 ? 1 : 0,
       lastUpdated: s.lastUpdated ?? DEFAULT_LAST_UPDATED,
+      applicationStartDate:
+        s.applicationStartDate !== undefined
+          ? s.applicationStartDate
+          : (APPLICATION_WINDOWS[s.slug]?.start ?? null),
+      applicationEndDate:
+        s.applicationEndDate !== undefined
+          ? s.applicationEndDate
+          : (APPLICATION_WINDOWS[s.slug]?.end ?? null),
     });
   }
   console.log("Seed complete.");

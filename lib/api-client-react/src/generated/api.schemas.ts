@@ -96,6 +96,16 @@ export interface Scheme {
    * @nullable
    */
   lastUpdated?: string | null;
+  /**
+   * ISO date string when applications open (null = continuously open / no fixed window).
+   * @nullable
+   */
+  applicationStartDate?: string | null;
+  /**
+   * ISO date string when applications close (null = continuously open / no fixed window).
+   * @nullable
+   */
+  applicationEndDate?: string | null;
   createdAt: string;
 }
 
@@ -122,6 +132,10 @@ export interface SchemeInput {
   isCentralScheme?: boolean | null;
   /** @nullable */
   lastUpdated?: string | null;
+  /** @nullable */
+  applicationStartDate?: string | null;
+  /** @nullable */
+  applicationEndDate?: string | null;
 }
 
 export interface EligibilityProfile {

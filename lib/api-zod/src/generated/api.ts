@@ -114,6 +114,18 @@ export const ListSchemesResponseItem = zod.object({
     .describe(
       "ISO date string when the scheme info was last verified by editors.",
     ),
+  applicationStartDate: zod
+    .string()
+    .nullish()
+    .describe(
+      "ISO date string when applications open (null = continuously open \/ no fixed window).",
+    ),
+  applicationEndDate: zod
+    .string()
+    .nullish()
+    .describe(
+      "ISO date string when applications close (null = continuously open \/ no fixed window).",
+    ),
   createdAt: zod.coerce.date(),
 });
 export const ListSchemesResponse = zod.array(ListSchemesResponseItem);
@@ -186,6 +198,8 @@ export const CreateSchemeBody = zod.object({
   popularity: zod.number().optional(),
   isCentralScheme: zod.boolean().nullish(),
   lastUpdated: zod.string().nullish(),
+  applicationStartDate: zod.string().nullish(),
+  applicationEndDate: zod.string().nullish(),
 });
 
 export const CreateSchemeResponse = zod.object({
@@ -269,6 +283,18 @@ export const CreateSchemeResponse = zod.object({
     .nullish()
     .describe(
       "ISO date string when the scheme info was last verified by editors.",
+    ),
+  applicationStartDate: zod
+    .string()
+    .nullish()
+    .describe(
+      "ISO date string when applications open (null = continuously open \/ no fixed window).",
+    ),
+  applicationEndDate: zod
+    .string()
+    .nullish()
+    .describe(
+      "ISO date string when applications close (null = continuously open \/ no fixed window).",
     ),
   createdAt: zod.coerce.date(),
 });
@@ -358,6 +384,18 @@ export const ListPopularSchemesResponseItem = zod.object({
     .nullish()
     .describe(
       "ISO date string when the scheme info was last verified by editors.",
+    ),
+  applicationStartDate: zod
+    .string()
+    .nullish()
+    .describe(
+      "ISO date string when applications open (null = continuously open \/ no fixed window).",
+    ),
+  applicationEndDate: zod
+    .string()
+    .nullish()
+    .describe(
+      "ISO date string when applications close (null = continuously open \/ no fixed window).",
     ),
   createdAt: zod.coerce.date(),
 });
@@ -454,6 +492,18 @@ export const GetSchemeResponse = zod.object({
     .describe(
       "ISO date string when the scheme info was last verified by editors.",
     ),
+  applicationStartDate: zod
+    .string()
+    .nullish()
+    .describe(
+      "ISO date string when applications open (null = continuously open \/ no fixed window).",
+    ),
+  applicationEndDate: zod
+    .string()
+    .nullish()
+    .describe(
+      "ISO date string when applications close (null = continuously open \/ no fixed window).",
+    ),
   createdAt: zod.coerce.date(),
 });
 
@@ -529,6 +579,8 @@ export const UpdateSchemeBody = zod.object({
   popularity: zod.number().optional(),
   isCentralScheme: zod.boolean().nullish(),
   lastUpdated: zod.string().nullish(),
+  applicationStartDate: zod.string().nullish(),
+  applicationEndDate: zod.string().nullish(),
 });
 
 export const UpdateSchemeResponse = zod.object({
@@ -612,6 +664,18 @@ export const UpdateSchemeResponse = zod.object({
     .nullish()
     .describe(
       "ISO date string when the scheme info was last verified by editors.",
+    ),
+  applicationStartDate: zod
+    .string()
+    .nullish()
+    .describe(
+      "ISO date string when applications open (null = continuously open \/ no fixed window).",
+    ),
+  applicationEndDate: zod
+    .string()
+    .nullish()
+    .describe(
+      "ISO date string when applications close (null = continuously open \/ no fixed window).",
     ),
   createdAt: zod.coerce.date(),
 });
@@ -776,6 +840,18 @@ export const CheckEligibilityResponse = zod.object({
           .nullish()
           .describe(
             "ISO date string when the scheme info was last verified by editors.",
+          ),
+        applicationStartDate: zod
+          .string()
+          .nullish()
+          .describe(
+            "ISO date string when applications open (null = continuously open \/ no fixed window).",
+          ),
+        applicationEndDate: zod
+          .string()
+          .nullish()
+          .describe(
+            "ISO date string when applications close (null = continuously open \/ no fixed window).",
           ),
         createdAt: zod.coerce.date(),
       }),

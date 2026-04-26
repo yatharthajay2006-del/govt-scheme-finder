@@ -112,6 +112,8 @@ router.post("/schemes", async (req, res) => {
             ? 1
             : 0,
       lastUpdated: data.lastUpdated ?? new Date().toISOString().slice(0, 10),
+      applicationStartDate: data.applicationStartDate ?? null,
+      applicationEndDate: data.applicationEndDate ?? null,
     })
     .returning();
   res.json(serializeScheme(inserted[0]));
@@ -157,6 +159,8 @@ router.patch("/schemes/:id", async (req, res) => {
             ? 1
             : 0,
       lastUpdated: data.lastUpdated ?? new Date().toISOString().slice(0, 10),
+      applicationStartDate: data.applicationStartDate ?? null,
+      applicationEndDate: data.applicationEndDate ?? null,
     })
     .where(eq(schemesTable.id, params.data.id))
     .returning();

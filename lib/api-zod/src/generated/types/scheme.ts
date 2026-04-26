@@ -41,5 +41,15 @@ export interface Scheme {
    * @nullable
    */
   lastUpdated?: string | null;
+  /**
+   * ISO date string when applications open (null = continuously open / no fixed window).
+   * @nullable
+   */
+  applicationStartDate?: string | null;
+  /**
+   * ISO date string when applications close (null = continuously open / no fixed window).
+   * @nullable
+   */
+  applicationEndDate?: string | null;
   createdAt: Date;
 }
