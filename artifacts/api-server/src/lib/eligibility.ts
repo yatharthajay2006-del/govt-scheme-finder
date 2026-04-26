@@ -122,6 +122,8 @@ export function serializeScheme(s: SchemeRow) {
     eligibilityRules: s.eligibilityRules ?? [],
     eligibilitySummary: s.eligibilitySummary,
     popularity: s.popularity,
+    isCentralScheme: (s.isCentralScheme ?? 1) === 1,
+    lastUpdated: s.lastUpdated ?? null,
     createdAt: s.createdAt.toISOString(),
   };
 }

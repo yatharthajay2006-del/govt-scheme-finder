@@ -27,4 +27,8 @@ export interface SchemeInput {
   eligibilityRules: EligibilityRule[];
   eligibilitySummary: string;
   popularity?: number;
+  /** @nullable */
+  isCentralScheme?: boolean | null;
+  /** @nullable */
+  lastUpdated?: string | null;
 }

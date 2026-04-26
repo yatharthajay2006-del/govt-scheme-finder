@@ -103,6 +103,15 @@ router.post("/schemes", async (req, res) => {
       })) as never,
       eligibilitySummary: data.eligibilitySummary,
       popularity: data.popularity ?? 0,
+      isCentralScheme:
+        data.isCentralScheme === undefined || data.isCentralScheme === null
+          ? data.applicableStates.length === 0
+            ? 1
+            : 0
+          : data.isCentralScheme
+            ? 1
+            : 0,
+      lastUpdated: data.lastUpdated ?? new Date().toISOString().slice(0, 10),
     })
     .returning();
   res.json(serializeScheme(inserted[0]));
@@ -139,6 +148,15 @@ router.patch("/schemes/:id", async (req, res) => {
       })) as never,
       eligibilitySummary: data.eligibilitySummary,
       popularity: data.popularity ?? 0,
+      isCentralScheme:
+        data.isCentralScheme === undefined || data.isCentralScheme === null
+          ? data.applicableStates.length === 0
+            ? 1
+            : 0
+          : data.isCentralScheme
+            ? 1
+            : 0,
+      lastUpdated: data.lastUpdated ?? new Date().toISOString().slice(0, 10),
     })
     .where(eq(schemesTable.id, params.data.id))
     .returning();

@@ -35,7 +35,10 @@ type Seed = {
   eligibilityRules: Rule[];
   eligibilitySummary: string;
   popularity: number;
+  lastUpdated?: string;
 };
+
+const DEFAULT_LAST_UPDATED = "2026-01-20";
 
 const SCHEMES: Seed[] = [
   {
@@ -1602,6 +1605,1608 @@ const SCHEMES: Seed[] = [
       "Persons with 40% or more disability seeking education, training or self-employment support.",
     popularity: 55,
   },
+
+  // ============================================================
+  // Additional Central Government schemes
+  // ============================================================
+  {
+    slug: "pm-vishwakarma",
+    name: "PM Vishwakarma Yojana",
+    nameHindi: "पीएम विश्वकर्मा योजना",
+    category: "employment",
+    ministry: "Ministry of MSME",
+    shortDescription:
+      "End-to-end support for traditional artisans and craftspeople — recognition, skill, toolkit, credit and market linkage.",
+    description:
+      "PM Vishwakarma is a Central Sector Scheme launched in 2023 to provide holistic support to artisans and craftspeople working with their hands and tools across 18 trades — including carpenters, blacksmiths, goldsmiths, potters, sculptors, cobblers, tailors, masons, washermen, barbers, fishing-net makers and more. Beneficiaries get a Vishwakarma certificate and ID card, basic and advanced skill training with a stipend, a toolkit incentive of Rs 15,000, collateral-free credit up to Rs 3 lakh at 5% interest, and digital transactions and marketing support.",
+    benefits: [
+      "Recognition through PM Vishwakarma certificate and ID card",
+      "Skill training with Rs 500 per day stipend",
+      "Toolkit incentive of Rs 15,000",
+      "Collateral-free loan up to Rs 1 lakh (1st tranche) and Rs 2 lakh (2nd) at 5%",
+      "Incentive for digital transactions",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Mobile number linked to Aadhaar",
+      "Bank account details",
+      "Ration card",
+      "Caste / category certificate (if applicable)",
+    ],
+    applySteps: [
+      "Visit a Common Service Centre (CSC) with your Aadhaar and bank details",
+      "Get registered under one of the 18 trades on pmvishwakarma.gov.in",
+      "Complete three-step verification by Gram Panchayat / ULB and District",
+      "Attend Basic Skill Training and claim toolkit voucher",
+      "Apply for credit through partner banks",
+    ],
+    officialLink: "https://pmvishwakarma.gov.in",
+    applicableStates: [],
+    tags: ["artisan", "craftsman", "msme", "loan", "skill", "toolkit"],
+    eligibilityRules: [
+      { field: "age", operator: "gte", value: 18, label: "You are 18 years or older" },
+      { field: "employmentStatus", operator: "in", value: ["self_employed", "unemployed"], label: "You are an artisan or craftsperson" },
+    ],
+    eligibilitySummary:
+      "Traditional artisans and craftspeople in 18 listed trades, aged 18+, who use hands and tools.",
+    popularity: 82,
+  },
+
+  {
+    slug: "pm-kisan-maandhan",
+    name: "PM Kisan Maan-Dhan Yojana",
+    nameHindi: "पीएम किसान मानधन योजना",
+    category: "pension",
+    ministry: "Ministry of Agriculture & Farmers Welfare",
+    shortDescription:
+      "Voluntary pension scheme for small and marginal farmers — Rs 3,000 monthly pension after age 60.",
+    description:
+      "PM-KMY is a contributory pension scheme for small and marginal farmers (with cultivable land up to 2 hectares). Farmers aged 18–40 contribute Rs 55–200 per month till age 60, with the Government of India contributing an equal amount. On reaching 60, the farmer receives a guaranteed minimum pension of Rs 3,000 per month for life. Spouse gets 50% family pension on death of the farmer.",
+    benefits: [
+      "Guaranteed Rs 3,000 monthly pension from age 60",
+      "Equal monthly contribution by Government of India",
+      "Family pension of 50% to spouse on death of farmer",
+      "Exit option with interest at any time",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Savings bank account or PM-Kisan account",
+      "Land record / Khasra-Khatauni",
+    ],
+    applySteps: [
+      "Visit nearest Common Service Centre (CSC)",
+      "Provide Aadhaar, bank details and land documents",
+      "Auto-debit mandate is set up for monthly contribution",
+      "Receive Kisan Pension Account Number (KPAN) and PM-KMY card",
+    ],
+    officialLink: "https://maandhan.in/scheme/pmkmy",
+    applicableStates: [],
+    tags: ["farmer", "pension", "small-farmer", "old-age", "contributory"],
+    eligibilityRules: [
+      { field: "isFarmer", operator: "true", label: "You are a small or marginal farmer (≤ 2 ha land)" },
+      { field: "age", operator: "gte", value: 18, label: "You are 18 years or older" },
+      { field: "age", operator: "lte", value: 40, label: "You are not older than 40" },
+    ],
+    eligibilitySummary:
+      "Small and marginal farmers (cultivable land up to 2 hectares) aged between 18 and 40 years.",
+    popularity: 70,
+  },
+
+  {
+    slug: "e-shram",
+    name: "e-Shram Card (National Database of Unorganised Workers)",
+    nameHindi: "ई-श्रम कार्ड",
+    category: "employment",
+    ministry: "Ministry of Labour & Employment",
+    shortDescription:
+      "Free Universal Account Number card for unorganised sector workers, opening doors to social security benefits.",
+    description:
+      "e-Shram is the first ever national database of unorganised workers — including construction workers, migrant labourers, gig and platform workers, street vendors, domestic workers, agricultural workers, MGNREGA workers and more. Registration is free and provides a 12-digit Universal Account Number (UAN). Cardholders are auto-enrolled for Pradhan Mantri Suraksha Bima Yojana for the first year (Rs 2 lakh accidental cover) and become eligible for future targeted schemes.",
+    benefits: [
+      "Free 12-digit Universal Account Number (UAN) e-Shram card",
+      "Accidental insurance cover of Rs 2 lakh under PMSBY (first year free)",
+      "Single platform to receive future welfare scheme benefits",
+      "Portable identity across states for migrant workers",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Mobile number linked with Aadhaar",
+      "Bank account details (IFSC and account number)",
+    ],
+    applySteps: [
+      "Visit eshram.gov.in or nearest CSC",
+      "Enter Aadhaar-linked mobile number and verify OTP",
+      "Fill personal, occupation, address and bank details",
+      "Download and save the e-Shram card",
+    ],
+    officialLink: "https://eshram.gov.in",
+    applicableStates: [],
+    tags: ["unorganised", "labour", "worker", "migrant", "gig", "construction"],
+    eligibilityRules: [
+      { field: "age", operator: "gte", value: 16, label: "You are between 16 and 59 years old" },
+      { field: "age", operator: "lte", value: 59, label: "You are not yet 60" },
+      { field: "employmentStatus", operator: "in", value: ["employed", "self_employed", "unemployed"], label: "You work in the unorganised sector" },
+    ],
+    eligibilitySummary:
+      "Any unorganised sector worker aged 16–59 not covered by EPFO/ESIC and not paying income tax.",
+    popularity: 88,
+  },
+
+  {
+    slug: "pmegp",
+    name: "Prime Minister's Employment Generation Programme (PMEGP)",
+    nameHindi: "प्रधानमंत्री रोजगार सृजन कार्यक्रम",
+    category: "employment",
+    ministry: "Ministry of MSME",
+    shortDescription:
+      "Credit-linked subsidy programme to set up new micro-enterprises in manufacturing or service sector.",
+    description:
+      "PMEGP, implemented by KVIC, helps unemployed youth and traditional artisans set up new micro-enterprises. Project cost up to Rs 50 lakh (manufacturing) and Rs 20 lakh (service) is eligible. Margin money subsidy ranges from 15% (general / urban) up to 35% (special category / rural).",
+    benefits: [
+      "Project loan up to Rs 50 lakh for manufacturing units",
+      "Project loan up to Rs 20 lakh for service units",
+      "Margin money subsidy of 15%–35% of project cost",
+      "Mandatory EDP training before disbursal",
+    ],
+    requiredDocuments: [
+      "Aadhaar card and PAN",
+      "Educational qualification certificate",
+      "Project report",
+      "Caste / special category certificate (if applicable)",
+      "Bank account details",
+    ],
+    applySteps: [
+      "Apply online at kviconline.gov.in/pmegpeportal",
+      "Upload project report and supporting documents",
+      "Attend the District Task Force interview",
+      "Complete EDP (Entrepreneurship Development Programme) training",
+      "Receive sanction and disbursal from financing bank",
+    ],
+    officialLink: "https://www.kviconline.gov.in/pmegpeportal/jsp/pmegponline.jsp",
+    applicableStates: [],
+    tags: ["msme", "loan", "subsidy", "self-employment", "youth"],
+    eligibilityRules: [
+      { field: "age", operator: "gte", value: 18, label: "You are 18 years or older" },
+      { field: "employmentStatus", operator: "in", value: ["unemployed", "self_employed"], label: "You want to start a new micro-enterprise" },
+    ],
+    eligibilitySummary:
+      "Individuals aged 18+ wanting to set up a new micro-enterprise (existing units not eligible). 8th standard pass required for projects above Rs 10 lakh (mfg) or Rs 5 lakh (service).",
+    popularity: 75,
+  },
+
+  {
+    slug: "ddu-gky",
+    name: "Deen Dayal Upadhyaya Grameen Kaushalya Yojana (DDU-GKY)",
+    nameHindi: "दीनदयाल उपाध्याय ग्रामीण कौशल्य योजना",
+    category: "employment",
+    ministry: "Ministry of Rural Development",
+    shortDescription:
+      "Free placement-linked skill training for rural poor youth aged 15–35.",
+    description:
+      "DDU-GKY targets rural poor youth from BPL families and trains them in market-driven skills with assured placement. Training is free, fully residential or non-residential, and includes domain skills, soft skills, English and IT. Post-placement support and migration support are also provided.",
+    benefits: [
+      "Free skill training (residential or non-residential)",
+      "Free uniforms, study material, food and lodging during training",
+      "Placement in jobs with minimum prescribed wages",
+      "Post-placement support of Rs 1,000–1,500/month for 3 months",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "BPL ration card or income proof",
+      "Educational qualification certificate",
+      "Bank account details",
+    ],
+    applySteps: [
+      "Identify a DDU-GKY training centre via the Kaushal Bharat / state mission portal",
+      "Submit application with documents",
+      "Undergo selection and counselling",
+      "Complete training and accept placement offer",
+    ],
+    officialLink: "https://ddugky.gov.in",
+    applicableStates: [],
+    tags: ["skill", "rural", "youth", "placement", "training", "free"],
+    eligibilityRules: [
+      { field: "age", operator: "gte", value: 15, label: "You are between 15 and 35 years old" },
+      { field: "age", operator: "lte", value: 35, label: "You are not older than 35" },
+      { field: "employmentStatus", operator: "in", value: ["unemployed", "student"], label: "You are a rural unemployed youth" },
+    ],
+    eligibilitySummary:
+      "Rural poor youth aged 15–35 (45 for women / SC/ST/PwD/minorities). Family must be poor as per SECC or eligible criteria.",
+    popularity: 70,
+  },
+
+  {
+    slug: "pm-daksh",
+    name: "PM-DAKSH Yojana",
+    nameHindi: "पीएम-दक्ष योजना",
+    category: "employment",
+    ministry: "Ministry of Social Justice & Empowerment",
+    shortDescription:
+      "Free skill development and upskilling for SC, OBC, EBC, DNT and Safai Karamcharis.",
+    description:
+      "Pradhan Mantri Dakshta Aur Kushalta Sampann Hitgrahi (PM-DAKSH) provides skill development training in three formats: short-term Up-skilling/Re-skilling, Short Term Training and Long Term Training. Training is free with stipend for SC, OBC, EBC, De-Notified Tribes and Safai Karamcharis.",
+    benefits: [
+      "Free short-term and long-term skill training",
+      "Stipend of Rs 1,500/month or Rs 3,000/month based on course",
+      "Free study material, uniform and tool kit",
+      "Placement assistance after training",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Caste / category certificate (SC/OBC/EBC/DNT)",
+      "Income certificate (annual income < Rs 3 lakh)",
+      "Bank account details",
+    ],
+    applySteps: [
+      "Register on pmdaksh.dosje.gov.in or via PM-DAKSH mobile app",
+      "Choose training centre and course",
+      "Submit category and income certificates",
+      "Attend training and receive stipend in bank account",
+    ],
+    officialLink: "https://pmdaksh.dosje.gov.in",
+    applicableStates: [],
+    tags: ["skill", "sc", "obc", "minority", "stipend", "training"],
+    eligibilityRules: [
+      { field: "age", operator: "gte", value: 18, label: "You are between 18 and 45 years old" },
+      { field: "age", operator: "lte", value: 45, label: "You are not older than 45" },
+      { field: "casteCategory", operator: "in", value: ["sc", "obc", "minority"], label: "You belong to SC, OBC, EBC, DNT or are a Safai Karamchari" },
+      { field: "annualIncome", operator: "lt", value: 300000, label: "Family income below Rs 3 lakh per year" },
+    ],
+    eligibilitySummary:
+      "SC/OBC/EBC/DNT/Safai Karamchari, aged 18–45, with family annual income below Rs 3 lakh.",
+    popularity: 60,
+  },
+
+  {
+    slug: "saubhagya",
+    name: "Pradhan Mantri Sahaj Bijli Har Ghar Yojana (Saubhagya)",
+    nameHindi: "सौभाग्य योजना",
+    category: "other",
+    ministry: "Ministry of Power",
+    shortDescription:
+      "Free electricity connection to all un-electrified households (poor families pay nothing).",
+    description:
+      "Saubhagya was launched to achieve universal household electrification by providing last-mile electricity connections to all un-electrified households in rural and urban areas. Poor families identified through SECC 2011 get the connection free of cost; others pay Rs 500 in 10 instalments via electricity bills. Includes wiring inside the house, energy meter, LED bulbs, fan and switch.",
+    benefits: [
+      "Free last-mile electricity connection for SECC poor households",
+      "Rs 500 connection cost (in 10 instalments) for non-SECC families",
+      "Includes meter, wiring, LED bulbs and fan",
+      "Solar pack of 200–300 Wp for households in remote, ungridded areas",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Voter ID or any other photo identity",
+      "Proof of residence",
+      "SECC 2011 deprivation certificate (if applicable)",
+    ],
+    applySteps: [
+      "Register on saubhagya.gov.in or contact nearest electricity DISCOM",
+      "Submit identity and address documents",
+      "DISCOM team carries out site survey and installation",
+    ],
+    officialLink: "https://saubhagya.gov.in",
+    applicableStates: [],
+    tags: ["electricity", "rural", "urban-poor", "free-connection"],
+    eligibilityRules: [],
+    eligibilitySummary:
+      "Any un-electrified household in India. Free for SECC 2011 poor families; nominal cost for others.",
+    popularity: 65,
+  },
+
+  {
+    slug: "jal-jeevan-mission",
+    name: "Jal Jeevan Mission (Har Ghar Jal)",
+    nameHindi: "जल जीवन मिशन",
+    category: "other",
+    ministry: "Ministry of Jal Shakti",
+    shortDescription:
+      "Functional household tap water connection (FHTC) to every rural household by 2024.",
+    description:
+      "Jal Jeevan Mission is a flagship programme aimed at providing safe and adequate drinking water through individual household tap connections to all rural households. The mission focuses on ensuring 55 litres per capita per day of potable water at service level on regular and long-term basis.",
+    benefits: [
+      "Functional tap water connection inside every rural household",
+      "55 litres per capita per day of safe drinking water",
+      "Reduced drudgery for women and girls",
+      "Community participation through Village Water & Sanitation Committee",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Proof of rural residence",
+      "Ration card (if available)",
+    ],
+    applySteps: [
+      "Approach the Gram Panchayat or Village Water & Sanitation Committee",
+      "Get listed in the village action plan",
+      "Connection is provided by State PHED / implementing agency",
+    ],
+    officialLink: "https://jaljeevanmission.gov.in",
+    applicableStates: [],
+    tags: ["water", "rural", "tap-connection", "sanitation"],
+    eligibilityRules: [],
+    eligibilitySummary:
+      "Every rural household in India is eligible for a Functional Household Tap Connection.",
+    popularity: 70,
+  },
+
+  {
+    slug: "swachh-bharat-toilet",
+    name: "Swachh Bharat Mission – Individual Household Latrine (IHHL)",
+    nameHindi: "स्वच्छ भारत मिशन - व्यक्तिगत घरेलू शौचालय",
+    category: "other",
+    ministry: "Ministry of Jal Shakti / Housing & Urban Affairs",
+    shortDescription:
+      "Subsidy of Rs 12,000 to construct an individual household toilet.",
+    description:
+      "Under SBM (Gramin) and SBM (Urban), eligible households without an individual toilet receive an incentive of Rs 12,000 (Centre + State share) for construction of a twin-pit toilet with water, hand-wash and ventilation. Aim is to make India Open Defecation Free (ODF) and ODF Plus.",
+    benefits: [
+      "Rs 12,000 incentive for construction of household toilet",
+      "Twin-pit design for safe disposal",
+      "Improved hygiene, dignity and women's safety",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Bank account details",
+      "Proof of residence",
+      "Photograph of existing premises (no toilet)",
+    ],
+    applySteps: [
+      "Apply via Gram Panchayat (rural) or Urban Local Body (urban)",
+      "Get site verified by sanitation officer",
+      "Construct toilet as per design",
+      "Receive incentive in bank after geo-tagged photo verification",
+    ],
+    officialLink: "https://swachhbharatmission.ddws.gov.in",
+    applicableStates: [],
+    tags: ["sanitation", "toilet", "subsidy", "swachh-bharat"],
+    eligibilityRules: [],
+    eligibilitySummary:
+      "Households without an individual household toilet. Priority to BPL, SC/ST, women-headed households and PwDs.",
+    popularity: 68,
+  },
+
+  {
+    slug: "soil-health-card",
+    name: "Soil Health Card Scheme",
+    nameHindi: "मृदा स्वास्थ्य कार्ड योजना",
+    category: "agriculture",
+    ministry: "Ministry of Agriculture & Farmers Welfare",
+    shortDescription:
+      "Free soil testing and personalised crop and fertiliser recommendations for every farm.",
+    description:
+      "The scheme provides every farmer with a Soil Health Card every two years. It contains the status of soil with respect to 12 parameters (N, P, K, S, micro-nutrients, pH, EC, OC) and gives personalised recommendations for nutrient and fertiliser dose for the crops to be grown.",
+    benefits: [
+      "Free soil testing every 2 years",
+      "Personalised fertiliser and nutrient recommendations",
+      "Reduces input cost and improves yield",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Land ownership / khasra documents",
+    ],
+    applySteps: [
+      "Approach Krishi Vigyan Kendra or Agriculture Department",
+      "Provide land details for soil sample collection",
+      "Receive printed Soil Health Card with recommendations",
+    ],
+    officialLink: "https://soilhealth.dac.gov.in",
+    applicableStates: [],
+    tags: ["farmer", "soil", "agriculture", "free"],
+    eligibilityRules: [
+      { field: "isFarmer", operator: "true", label: "You are a farmer with cultivable land" },
+    ],
+    eligibilitySummary:
+      "All farmers in India with cultivable land are eligible.",
+    popularity: 50,
+  },
+
+  {
+    slug: "pkvy-organic",
+    name: "Paramparagat Krishi Vikas Yojana (PKVY)",
+    nameHindi: "परंपरागत कृषि विकास योजना",
+    category: "agriculture",
+    ministry: "Ministry of Agriculture & Farmers Welfare",
+    shortDescription:
+      "Financial assistance of Rs 50,000 per hectare over 3 years to adopt organic farming.",
+    description:
+      "PKVY promotes organic farming through Participatory Guarantee System (PGS) certification in clusters of 50 hectares or more. Farmers receive Rs 50,000 per hectare over 3 years for inputs, on-farm infrastructure, certification and marketing.",
+    benefits: [
+      "Rs 50,000 per hectare assistance over 3 years",
+      "Free PGS-India organic certification",
+      "Support for value addition and marketing",
+      "Cluster-based extension and training",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Land ownership documents",
+      "Bank account details",
+    ],
+    applySteps: [
+      "Form a cluster of 50 hectares with at least 50 farmers",
+      "Register through state Department of Agriculture",
+      "Adopt organic practices as per PGS-India norms",
+      "Receive assistance in DBT mode in three annual instalments",
+    ],
+    officialLink: "https://pgsindia-ncof.gov.in",
+    applicableStates: [],
+    tags: ["farmer", "organic", "agriculture", "subsidy"],
+    eligibilityRules: [
+      { field: "isFarmer", operator: "true", label: "You are a farmer" },
+    ],
+    eligibilitySummary:
+      "Farmers willing to adopt organic farming in cluster mode of 50 hectares or more.",
+    popularity: 48,
+  },
+
+  {
+    slug: "pmksy",
+    name: "Pradhan Mantri Krishi Sinchayee Yojana (PMKSY)",
+    nameHindi: "प्रधानमंत्री कृषि सिंचाई योजना",
+    category: "agriculture",
+    ministry: "Ministry of Agriculture & Farmers Welfare",
+    shortDescription:
+      "Subsidy on micro-irrigation (drip & sprinkler) systems — 'Per Drop More Crop'.",
+    description:
+      "PMKSY's 'Per Drop More Crop' component provides up to 55% subsidy to small/marginal farmers and 45% to other farmers on the cost of drip and sprinkler irrigation systems. The scheme also covers watershed development and 'Har Khet Ko Pani' for assured irrigation.",
+    benefits: [
+      "55% subsidy for small/marginal farmers on micro-irrigation",
+      "45% subsidy for other farmers",
+      "Improved water use efficiency and yield",
+      "Reduced power and labour costs",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Land ownership documents",
+      "Bank account details",
+      "Quotation from approved supplier",
+    ],
+    applySteps: [
+      "Apply online at pmksy.gov.in or through district Horticulture office",
+      "Get site survey done",
+      "Install system through empanelled supplier",
+      "Subsidy released to bank account after installation verification",
+    ],
+    officialLink: "https://pmksy.gov.in",
+    applicableStates: [],
+    tags: ["farmer", "irrigation", "subsidy", "drip", "sprinkler"],
+    eligibilityRules: [
+      { field: "isFarmer", operator: "true", label: "You are a farmer with own / leased land" },
+    ],
+    eligibilitySummary:
+      "All farmers with cultivable land. Higher subsidy for small/marginal farmers and SC/ST/women.",
+    popularity: 55,
+  },
+
+  {
+    slug: "pm-jan-dhan",
+    name: "Pradhan Mantri Jan Dhan Yojana (PMJDY)",
+    nameHindi: "प्रधानमंत्री जन धन योजना",
+    category: "other",
+    ministry: "Department of Financial Services",
+    shortDescription:
+      "Zero-balance bank account with RuPay debit card, accident cover and overdraft facility.",
+    description:
+      "PMJDY is the National Mission for Financial Inclusion that ensures access to financial services such as a basic savings account, credit, insurance and pension to every household. Account holders get a zero-balance bank account, free RuPay debit card with Rs 2 lakh accidental insurance and overdraft up to Rs 10,000.",
+    benefits: [
+      "Zero-balance basic savings account",
+      "Free RuPay debit card",
+      "Accidental insurance cover of Rs 2 lakh",
+      "Overdraft facility up to Rs 10,000 (after 6 months of satisfactory operation)",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Any one OVD (Voter ID, Passport, Driving Licence) if Aadhaar unavailable",
+      "Recent passport-size photograph",
+    ],
+    applySteps: [
+      "Visit any bank branch or Bank Mitra (Business Correspondent)",
+      "Fill the PMJDY account opening form",
+      "Submit Aadhaar / OVD",
+      "Receive passbook and RuPay card",
+    ],
+    officialLink: "https://pmjdy.gov.in",
+    applicableStates: [],
+    tags: ["bank", "financial-inclusion", "savings", "rupay", "insurance"],
+    eligibilityRules: [
+      { field: "age", operator: "gte", value: 10, label: "You are 10 years or older" },
+    ],
+    eligibilitySummary:
+      "Any Indian citizen aged 10+ who does not already have a bank account.",
+    popularity: 90,
+  },
+
+  {
+    slug: "naps-apprenticeship",
+    name: "National Apprenticeship Promotion Scheme (NAPS)",
+    nameHindi: "राष्ट्रीय शिक्षुता प्रोत्साहन योजना",
+    category: "employment",
+    ministry: "Ministry of Skill Development & Entrepreneurship",
+    shortDescription:
+      "Earn-while-you-learn apprenticeship with Government sharing 25% of stipend.",
+    description:
+      "NAPS promotes apprenticeship training in establishments. The Government reimburses 25% of the prescribed stipend (subject to a maximum of Rs 1,500 per month per apprentice) directly to the establishment. Apprentices gain industry experience and a certificate from the National Council for Vocational Education and Training.",
+    benefits: [
+      "Stipend during apprenticeship (25% reimbursed by Government)",
+      "NCVET-recognised apprenticeship certificate",
+      "On-the-job industry experience and improved employability",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Educational qualification certificates",
+      "Bank account details",
+    ],
+    applySteps: [
+      "Register as apprentice on apprenticeshipindia.gov.in",
+      "Search and apply for apprenticeship opportunities",
+      "Sign apprenticeship contract with employer",
+      "Complete training and receive certificate",
+    ],
+    officialLink: "https://apprenticeshipindia.gov.in",
+    applicableStates: [],
+    tags: ["apprenticeship", "youth", "stipend", "training", "employment"],
+    eligibilityRules: [
+      { field: "age", operator: "gte", value: 14, label: "You are 14 years or older" },
+      { field: "employmentStatus", operator: "in", value: ["unemployed", "student"], label: "You are looking for industry training" },
+    ],
+    eligibilitySummary:
+      "Indian citizens aged 14+ with minimum prescribed educational/technical qualifications.",
+    popularity: 58,
+  },
+
+  {
+    slug: "pm-internship",
+    name: "PM Internship Scheme",
+    nameHindi: "पीएम इंटर्नशिप योजना",
+    category: "employment",
+    ministry: "Ministry of Corporate Affairs",
+    shortDescription:
+      "12-month internships in top 500 companies with Rs 5,000/month assistance and Rs 6,000 one-time grant.",
+    description:
+      "PM Internship Scheme offers youth 12-month internships in India's top 500 companies for real-world experience. Interns receive Rs 5,000 monthly (Rs 4,500 from Government + Rs 500 from company CSR) and a one-time grant of Rs 6,000. Includes accident insurance and PMJJBY/PMSBY cover.",
+    benefits: [
+      "Monthly assistance of Rs 5,000 for 12 months",
+      "One-time grant of Rs 6,000 on joining",
+      "12 months hands-on experience in top 500 companies",
+      "Insurance cover during internship",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Educational qualification certificates",
+      "Bank account details (Aadhaar-seeded)",
+    ],
+    applySteps: [
+      "Register on pminternship.mca.gov.in",
+      "Build profile and shortlist internships",
+      "Apply to up to 5 opportunities",
+      "Accept offer and complete onboarding",
+    ],
+    officialLink: "https://pminternship.mca.gov.in",
+    applicableStates: [],
+    tags: ["internship", "youth", "stipend", "company", "employment"],
+    eligibilityRules: [
+      { field: "age", operator: "gte", value: 21, label: "You are between 21 and 24 years old" },
+      { field: "age", operator: "lte", value: 24, label: "You are not older than 24" },
+      { field: "employmentStatus", operator: "in", value: ["unemployed", "student"], label: "You are not in full-time employment or full-time education" },
+      { field: "annualIncome", operator: "lt", value: 800000, label: "Family annual income below Rs 8 lakh" },
+    ],
+    eligibilitySummary:
+      "Indian citizens aged 21–24, not in full-time job or education, family income below Rs 8 lakh.",
+    popularity: 78,
+  },
+
+  {
+    slug: "maef-scholarship",
+    name: "Maulana Azad National Fellowship for Minority Students",
+    nameHindi: "मौलाना आजाद राष्ट्रीय फेलोशिप",
+    category: "scholarship",
+    ministry: "Ministry of Minority Affairs",
+    shortDescription:
+      "Five-year fellowship (JRF/SRF rates) for minority students pursuing M.Phil/PhD.",
+    description:
+      "MANF provides financial assistance to students from notified minority communities (Muslim, Christian, Sikh, Buddhist, Jain, Parsi) pursuing M.Phil and PhD in Indian universities. The fellowship follows UGC NET-JRF rates and includes contingency, HRA and escort/reader assistance for PwD scholars.",
+    benefits: [
+      "JRF/SRF fellowship rates (currently Rs 37,000/Rs 42,000 per month)",
+      "Contingency grant of Rs 10,000–20,500/year",
+      "HRA as per UGC norms",
+      "Escort/Reader allowance for differently-abled scholars",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Caste / minority community certificate",
+      "Income certificate (family income < Rs 6 lakh)",
+      "Educational qualification certificates",
+      "PhD/M.Phil registration proof",
+    ],
+    applySteps: [
+      "Register on the National Scholarship Portal (NSP)",
+      "Apply in the MANF section after qualifying NTA test",
+      "Upload required documents and bank details",
+      "Track status through NSP",
+    ],
+    officialLink: "https://scholarships.gov.in",
+    applicableStates: [],
+    tags: ["minority", "research", "phd", "scholarship", "fellowship"],
+    eligibilityRules: [
+      { field: "casteCategory", operator: "eq", value: "minority", label: "You belong to a notified minority community" },
+      { field: "annualIncome", operator: "lt", value: 600000, label: "Family income below Rs 6 lakh per year" },
+      { field: "educationLevel", operator: "in", value: ["postgraduate"], label: "You are pursuing M.Phil/PhD" },
+    ],
+    eligibilitySummary:
+      "Minority community students (Muslim, Christian, Sikh, Buddhist, Jain, Parsi) pursuing M.Phil/PhD with family income below Rs 6 lakh.",
+    popularity: 50,
+  },
+
+  // ============================================================
+  // STATE FLAGSHIP SCHEMES
+  // ============================================================
+  {
+    slug: "ap-ysr-cheyutha",
+    name: "YSR Cheyutha",
+    nameHindi: "वाईएसआर चेयुथा",
+    category: "women",
+    ministry: "Andhra Pradesh – Women, Children, Disabled & Senior Citizens Department",
+    shortDescription:
+      "Rs 75,000 over 4 years (Rs 18,750/year) to women aged 45–60 from SC/ST/BC/Minority communities.",
+    description:
+      "YSR Cheyutha provides financial assistance to women aged between 45 and 60 years from SC, ST, BC and Minority communities in Andhra Pradesh. The amount is meant to be used as seed capital for self-employment, in tie-up with banks and partner companies.",
+    benefits: [
+      "Rs 18,750 per year for 4 consecutive years (total Rs 75,000)",
+      "Bank tie-ups for additional working capital loans",
+      "Tie-ups with companies (Amul, Reliance, etc.) for marketing support",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Caste certificate (SC/ST/BC/Minority)",
+      "Ration card",
+      "Bank account details",
+      "Residence proof of Andhra Pradesh",
+    ],
+    applySteps: [
+      "Apply through your village/ward Volunteer or Grama/Ward Sachivalayam",
+      "Verification by Welfare Assistant",
+      "Approval and payment via DBT to bank account",
+    ],
+    officialLink: "https://gsws-nbm.ap.gov.in",
+    applicableStates: ["Andhra Pradesh"],
+    tags: ["women", "sc", "st", "obc", "minority", "self-employment"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Andhra Pradesh", label: "You live in Andhra Pradesh" },
+      { field: "gender", operator: "eq", value: "female", label: "You are a woman" },
+      { field: "age", operator: "gte", value: 45, label: "You are between 45 and 60 years old" },
+      { field: "age", operator: "lte", value: 60, label: "You are not older than 60" },
+      { field: "casteCategory", operator: "in", value: ["sc", "st", "obc", "minority"], label: "You belong to SC/ST/BC/Minority community" },
+    ],
+    eligibilitySummary:
+      "Women aged 45–60 from SC/ST/BC/Minority communities residing in Andhra Pradesh.",
+    popularity: 70,
+  },
+
+  {
+    slug: "assam-orunodoi",
+    name: "Orunodoi 3.0",
+    nameHindi: "अरुणोदय",
+    category: "women",
+    ministry: "Government of Assam – Finance Department",
+    shortDescription:
+      "Rs 1,250 monthly direct cash transfer to women heads of poor households in Assam.",
+    description:
+      "Orunodoi is Assam's flagship DBT scheme that gives Rs 1,250 every month to woman head of eligible economically weaker households. The aim is to enhance the financial independence of women and improve household nutrition, healthcare and education spending.",
+    benefits: [
+      "Rs 1,250 per month directly to woman's bank account",
+      "Improved purchasing power for food, medicine and education",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Bank passbook (account in woman's name)",
+      "Ration card",
+      "Voter ID",
+      "PAN card (if available)",
+    ],
+    applySteps: [
+      "Application invited periodically by Finance Department, Government of Assam",
+      "Submit form at Circle Office or via local representative",
+      "Verification by district authorities",
+      "Monthly DBT after approval",
+    ],
+    officialLink: "https://orunodoi.assam.gov.in",
+    applicableStates: ["Assam"],
+    tags: ["women", "cash-transfer", "household", "poverty"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Assam", label: "You live in Assam" },
+      { field: "gender", operator: "eq", value: "female", label: "You are the woman head of the household" },
+      { field: "annualIncome", operator: "lt", value: 200000, label: "Family annual income below Rs 2 lakh" },
+    ],
+    eligibilitySummary:
+      "Woman head of economically weaker households in Assam (income below Rs 2 lakh, no Government job).",
+    popularity: 75,
+  },
+
+  {
+    slug: "bihar-kanya-utthan",
+    name: "Mukhyamantri Kanya Utthan Yojana",
+    nameHindi: "मुख्यमंत्री कन्या उत्थान योजना",
+    category: "women",
+    ministry: "Government of Bihar – Social Welfare Department",
+    shortDescription:
+      "Up to Rs 54,100 from birth till graduation for every girl in Bihar.",
+    description:
+      "Mukhyamantri Kanya Utthan Yojana provides financial support to girls at every stage of life — at birth, on Aadhaar registration, at one and two years (immunisation), on uniforms and sanitary napkins through school years, on passing intermediate (Rs 25,000) and on completing graduation (Rs 50,000 — increased from Rs 25,000 in 2024).",
+    benefits: [
+      "Rs 2,000 at birth + Rs 1,000 on Aadhaar enrolment",
+      "Rs 600–1,000 at age 1 and 2 (immunisation)",
+      "Rs 600 per year for uniforms (classes 1–12)",
+      "Rs 300 per year for sanitary napkins (classes 7–12)",
+      "Rs 25,000 on passing intermediate (unmarried)",
+      "Rs 50,000 on graduation (all girls)",
+    ],
+    requiredDocuments: [
+      "Aadhaar card of girl and parents",
+      "Birth certificate",
+      "Educational mark sheets",
+      "Bank account in girl's name",
+      "Bihar residence proof",
+    ],
+    applySteps: [
+      "Register on medhasoft.bih.nic.in for the relevant component",
+      "Upload mark sheets and bank details",
+      "Verification by school / college / ICDS",
+      "DBT to girl's / parent's bank account",
+    ],
+    officialLink: "https://medhasoft.bih.nic.in",
+    applicableStates: ["Bihar"],
+    tags: ["girl-child", "education", "scholarship", "graduation"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Bihar", label: "You live in Bihar" },
+      { field: "gender", operator: "eq", value: "female", label: "You are a girl / woman" },
+    ],
+    eligibilitySummary:
+      "Every girl child resident of Bihar from birth to graduation.",
+    popularity: 80,
+  },
+
+  {
+    slug: "cg-mahtari-vandan",
+    name: "Mahtari Vandan Yojana",
+    nameHindi: "महतारी वंदन योजना",
+    category: "women",
+    ministry: "Government of Chhattisgarh – Women & Child Development",
+    shortDescription:
+      "Rs 1,000 per month (Rs 12,000/year) to married women aged 21+ in Chhattisgarh.",
+    description:
+      "Mahtari Vandan Yojana gives Rs 1,000 every month directly to bank accounts of eligible married women in Chhattisgarh, to improve their financial independence and family welfare.",
+    benefits: [
+      "Rs 1,000 per month direct cash transfer (Rs 12,000 per year)",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Marriage certificate / proof of marriage",
+      "Bank passbook (Aadhaar-linked)",
+      "Domicile certificate of Chhattisgarh",
+    ],
+    applySteps: [
+      "Apply online at mahtarivandan.cgstate.gov.in or at Anganwadi centre",
+      "Submit Aadhaar, marriage proof and bank details",
+      "Verification by ICDS officials",
+      "Monthly DBT after approval",
+    ],
+    officialLink: "https://mahtarivandan.cgstate.gov.in",
+    applicableStates: ["Chhattisgarh"],
+    tags: ["women", "married", "cash-transfer"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Chhattisgarh", label: "You live in Chhattisgarh" },
+      { field: "gender", operator: "eq", value: "female", label: "You are a woman" },
+      { field: "age", operator: "gte", value: 21, label: "You are 21 years or older" },
+    ],
+    eligibilitySummary:
+      "Married, divorced, abandoned or widowed women aged 21+ residing in Chhattisgarh. Family must not pay income tax.",
+    popularity: 78,
+  },
+
+  {
+    slug: "delhi-pink-pass",
+    name: "Pink Ticket – Free Bus Travel for Women in Delhi",
+    nameHindi: "पिंक टिकट",
+    category: "women",
+    ministry: "Government of NCT of Delhi – Transport Department",
+    shortDescription:
+      "Free travel in DTC and cluster buses for all women in Delhi.",
+    description:
+      "Under the Pink Ticket initiative, every woman travelling in DTC and Cluster (Orange) buses in Delhi gets a free 'Pink Ticket' instead of paying fare. Aimed at safer mobility, more women in workforce and reduced cost burden.",
+    benefits: [
+      "Unlimited free travel in DTC and Cluster buses across Delhi",
+      "Encourages safer mobility through marshals on buses",
+    ],
+    requiredDocuments: [
+      "No documents needed at the time of travel — simply request a Pink Ticket from the conductor",
+    ],
+    applySteps: [
+      "Board any DTC or Orange (cluster) bus",
+      "Ask the conductor for a free Pink Ticket",
+    ],
+    officialLink: "https://transport.delhi.gov.in",
+    applicableStates: ["Delhi"],
+    tags: ["women", "transport", "free-travel", "delhi"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Delhi", label: "You travel in Delhi" },
+      { field: "gender", operator: "eq", value: "female", label: "You are a woman" },
+    ],
+    eligibilitySummary:
+      "All women travelling in DTC and cluster buses in Delhi (residents and non-residents).",
+    popularity: 75,
+  },
+
+  {
+    slug: "goa-griha-aadhar",
+    name: "Griha Aadhar Scheme",
+    nameHindi: "गृह आधार योजना",
+    category: "women",
+    ministry: "Government of Goa – Directorate of Women & Child Development",
+    shortDescription:
+      "Up to Rs 1,500 per month to housewives in Goa to support household needs.",
+    description:
+      "Griha Aadhar provides monthly cash assistance to housewives in Goa to mitigate the impact of price rise on essential commodities. The amount has been progressively increased and is currently Rs 1,500 per month for eligible women.",
+    benefits: [
+      "Rs 1,500 per month direct credit to bank account",
+      "Helps offset inflation in essential household items",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Marriage certificate",
+      "Goa residence proof (15 years)",
+      "Income certificate (annual income < Rs 3 lakh)",
+      "Bank account details",
+    ],
+    applySteps: [
+      "Apply at Directorate of Women & Child Development office or through Goa Online portal",
+      "Submit residence and income proof",
+      "Verification by Department",
+      "Monthly DBT after approval",
+    ],
+    officialLink: "https://www.wcd.goa.gov.in",
+    applicableStates: ["Goa"],
+    tags: ["women", "housewife", "goa", "cash-transfer"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Goa", label: "You live in Goa" },
+      { field: "gender", operator: "eq", value: "female", label: "You are a married woman / housewife" },
+      { field: "annualIncome", operator: "lt", value: 300000, label: "Family income below Rs 3 lakh" },
+    ],
+    eligibilitySummary:
+      "Married women housewives residing in Goa for 15+ years, with annual family income below Rs 3 lakh.",
+    popularity: 60,
+  },
+
+  {
+    slug: "gujarat-vahli-dikri",
+    name: "Vahli Dikri Yojana",
+    nameHindi: "वहाली दीकरी योजना",
+    category: "women",
+    ministry: "Government of Gujarat – Women & Child Development",
+    shortDescription:
+      "Up to Rs 1,10,000 in three instalments for the first two daughters of a family.",
+    description:
+      "Vahli Dikri Yojana supports the first two daughters of eligible families with Rs 4,000 in class 1, Rs 6,000 in class 9, and Rs 1,00,000 on attaining 18 years of age (for higher education or marriage). Aims to encourage girl child birth and education in Gujarat.",
+    benefits: [
+      "Rs 4,000 in class 1",
+      "Rs 6,000 in class 9",
+      "Rs 1,00,000 on completing 18 years",
+    ],
+    requiredDocuments: [
+      "Birth certificate of girl child",
+      "Aadhaar of parents and child",
+      "Bank passbook of the girl",
+      "Income certificate (family income ≤ Rs 2 lakh)",
+      "Gujarat residence proof",
+    ],
+    applySteps: [
+      "Apply at Anganwadi or Mamlatdar's office",
+      "Submit birth certificate and income proof",
+      "Verification by ICDS",
+      "DBT instalments at the prescribed milestones",
+    ],
+    officialLink: "https://wcd.gujarat.gov.in",
+    applicableStates: ["Gujarat"],
+    tags: ["girl-child", "education", "marriage", "gujarat"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Gujarat", label: "You live in Gujarat" },
+      { field: "gender", operator: "eq", value: "female", label: "You are a girl / her parent applying" },
+      { field: "annualIncome", operator: "lte", value: 200000, label: "Family annual income up to Rs 2 lakh" },
+    ],
+    eligibilitySummary:
+      "First two daughters of families in Gujarat with annual income up to Rs 2 lakh, born on or after 02-Aug-2019.",
+    popularity: 65,
+  },
+
+  {
+    slug: "haryana-lado-lakshmi",
+    name: "Lado Lakshmi Yojana",
+    nameHindi: "लाडो लक्ष्मी योजना",
+    category: "women",
+    ministry: "Government of Haryana – Women & Child Development",
+    shortDescription:
+      "Rs 2,100 per month direct cash assistance to women in Haryana.",
+    description:
+      "Lado Lakshmi Yojana, announced by the Government of Haryana, provides Rs 2,100 every month to eligible adult women residents of Haryana to enhance their financial independence and decision-making power within the household.",
+    benefits: [
+      "Rs 2,100 per month direct credit to bank account",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Haryana Parivar Pehchan Patra (Family ID)",
+      "Bank passbook (Aadhaar-seeded)",
+      "Income proof",
+    ],
+    applySteps: [
+      "Register through Parivar Pehchan Patra portal",
+      "Submit Family ID, Aadhaar and bank details",
+      "Verification by Department",
+      "Monthly DBT after approval",
+    ],
+    officialLink: "https://wcdhry.gov.in",
+    applicableStates: ["Haryana"],
+    tags: ["women", "haryana", "cash-transfer"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Haryana", label: "You live in Haryana" },
+      { field: "gender", operator: "eq", value: "female", label: "You are a woman" },
+      { field: "age", operator: "gte", value: 18, label: "You are 18 years or older" },
+    ],
+    eligibilitySummary:
+      "Adult women residents of Haryana with Parivar Pehchan Patra. Family income criteria as notified.",
+    popularity: 70,
+  },
+
+  {
+    slug: "hp-himcare",
+    name: "HIMCARE – Himachal Pradesh Universal Health Protection Scheme",
+    nameHindi: "हिमकेयर",
+    category: "healthcare",
+    ministry: "Government of Himachal Pradesh – Health & Family Welfare",
+    shortDescription:
+      "Cashless health insurance up to Rs 5 lakh per family per year for HP residents not covered by AB-PMJAY.",
+    description:
+      "HIMCARE provides cashless secondary and tertiary care up to Rs 5 lakh per family per year on a floater basis at empanelled hospitals. It covers HP residents who are not entitled to AB-PMJAY, with subsidised premiums (Rs 0–1,000 per year based on category).",
+    benefits: [
+      "Cashless treatment up to Rs 5 lakh per family per year",
+      "Coverage at empanelled public and private hospitals",
+      "Pre-existing diseases covered",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Himachali Bonafide certificate / domicile",
+      "Ration card",
+      "Income / category certificate",
+    ],
+    applySteps: [
+      "Apply via Lok Mitra Kendra or hpsbys.in portal",
+      "Pay applicable premium",
+      "Receive HIMCARE e-card",
+      "Avail cashless treatment at empanelled hospital",
+    ],
+    officialLink: "https://hpsbys.in",
+    applicableStates: ["Himachal Pradesh"],
+    tags: ["healthcare", "insurance", "hp", "cashless"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Himachal Pradesh", label: "You are an HP resident" },
+    ],
+    eligibilitySummary:
+      "Bonafide Himachali residents not eligible for AB-PMJAY. Premium varies from nil (BPL/SC/ST/disabled/widows) to Rs 1,000 (general).",
+    popularity: 65,
+  },
+
+  {
+    slug: "jharkhand-maiya-samman",
+    name: "Mukhyamantri Maiya Samman Yojana",
+    nameHindi: "मुख्यमंत्री मैया सम्मान योजना",
+    category: "women",
+    ministry: "Government of Jharkhand – Women, Child Development & Social Security",
+    shortDescription:
+      "Rs 2,500 per month to women aged 18–50 in Jharkhand.",
+    description:
+      "Mukhyamantri Maiya Samman Yojana provides monthly financial assistance to eligible women aged 18 to 50 years in Jharkhand. Originally launched at Rs 1,000/month, the amount has been revised upwards to Rs 2,500/month.",
+    benefits: [
+      "Rs 2,500 per month direct cash transfer",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Bank passbook (Aadhaar-linked)",
+      "Ration card",
+      "Jharkhand residence proof",
+    ],
+    applySteps: [
+      "Apply at Anganwadi centre or block office camps",
+      "Submit Aadhaar, ration card, bank details",
+      "Verification and monthly DBT after approval",
+    ],
+    officialLink: "https://mmmsy.jharkhand.gov.in",
+    applicableStates: ["Jharkhand"],
+    tags: ["women", "jharkhand", "cash-transfer"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Jharkhand", label: "You live in Jharkhand" },
+      { field: "gender", operator: "eq", value: "female", label: "You are a woman" },
+      { field: "age", operator: "gte", value: 18, label: "You are between 18 and 50 years old" },
+      { field: "age", operator: "lte", value: 50, label: "You are not older than 50" },
+    ],
+    eligibilitySummary:
+      "Women aged 18–50 residing in Jharkhand, family not paying income tax and not in Government job.",
+    popularity: 78,
+  },
+
+  {
+    slug: "karnataka-gruha-lakshmi",
+    name: "Gruha Lakshmi Scheme",
+    nameHindi: "गृह लक्ष्मी योजना",
+    category: "women",
+    ministry: "Government of Karnataka – Women & Child Development",
+    shortDescription:
+      "Rs 2,000 per month to woman head of every eligible family in Karnataka.",
+    description:
+      "Gruha Lakshmi is a guarantee scheme that gives Rs 2,000 per month to the woman head of every eligible household in Karnataka — those holding Antyodaya, BPL or APL ration cards (excluding GST-registered/income-tax-paying families).",
+    benefits: [
+      "Rs 2,000 per month directly to woman's bank account",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Ration card (Antyodaya / BPL / APL)",
+      "Bank passbook (Aadhaar-linked)",
+    ],
+    applySteps: [
+      "Apply through Seva Sindhu portal or at Bapuji / Karnataka One / Grama One centres",
+      "Provide Aadhaar and ration card details",
+      "Verification and monthly DBT",
+    ],
+    officialLink: "https://sevasindhuservices.karnataka.gov.in",
+    applicableStates: ["Karnataka"],
+    tags: ["women", "karnataka", "cash-transfer", "household"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Karnataka", label: "You live in Karnataka" },
+      { field: "gender", operator: "eq", value: "female", label: "You are the woman head of the family on the ration card" },
+    ],
+    eligibilitySummary:
+      "Woman head of family on Antyodaya/BPL/APL ration cards in Karnataka. Family not GST-registered or paying income tax.",
+    popularity: 80,
+  },
+
+  {
+    slug: "kerala-kasp",
+    name: "Karunya Arogya Suraksha Padhathi (KASP)",
+    nameHindi: "करुण्य आरोग्य सुरक्षा पद्धति",
+    category: "healthcare",
+    ministry: "Government of Kerala – State Health Agency",
+    shortDescription:
+      "Cashless secondary and tertiary care up to Rs 5 lakh per family per year for eligible Kerala residents.",
+    description:
+      "KASP is Kerala's converged health protection scheme that integrates Ayushman Bharat-PMJAY with state Karunya benefits. It provides cashless care up to Rs 5 lakh per family per year at empanelled hospitals, covering over 1,900 procedures.",
+    benefits: [
+      "Cashless cover up to Rs 5 lakh per family per year",
+      "Coverage at over 600 empanelled hospitals",
+      "Pre-existing illnesses covered from day 1",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Ration card",
+      "KASP / PMJAY beneficiary identification",
+    ],
+    applySteps: [
+      "Check eligibility on sha.kerala.gov.in",
+      "Get e-card generated at empanelled hospital or CSC",
+      "Avail cashless treatment at empanelled hospital",
+    ],
+    officialLink: "https://sha.kerala.gov.in",
+    applicableStates: ["Kerala"],
+    tags: ["healthcare", "insurance", "kerala", "cashless"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Kerala", label: "You are a Kerala resident" },
+    ],
+    eligibilitySummary:
+      "Kerala residents identified as PMJAY beneficiaries plus additional KASP-eligible categories notified by State Health Agency.",
+    popularity: 65,
+  },
+
+  {
+    slug: "mp-ladli-behna",
+    name: "Mukhyamantri Ladli Behna Yojana",
+    nameHindi: "मुख्यमंत्री लाडली बहना योजना",
+    category: "women",
+    ministry: "Government of Madhya Pradesh – Women & Child Development",
+    shortDescription:
+      "Rs 1,250 per month to women aged 21–60 in Madhya Pradesh.",
+    description:
+      "Mukhyamantri Ladli Behna Yojana provides monthly financial assistance directly to bank accounts of eligible women in Madhya Pradesh, to make them economically self-reliant and improve their role in family decision-making.",
+    benefits: [
+      "Rs 1,250 per month (Rs 15,000 per year) DBT",
+    ],
+    requiredDocuments: [
+      "Samagra ID",
+      "Aadhaar card",
+      "Bank passbook (Aadhaar-linked, DBT-enabled)",
+      "Madhya Pradesh residence proof",
+    ],
+    applySteps: [
+      "Apply at Gram Panchayat / Ward Office camps",
+      "e-KYC and submission of Samagra ID, Aadhaar",
+      "Verification by camp officials",
+      "Monthly DBT after approval",
+    ],
+    officialLink: "https://cmladlibahna.mp.gov.in",
+    applicableStates: ["Madhya Pradesh"],
+    tags: ["women", "mp", "cash-transfer"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Madhya Pradesh", label: "You live in Madhya Pradesh" },
+      { field: "gender", operator: "eq", value: "female", label: "You are a woman" },
+      { field: "age", operator: "gte", value: 21, label: "You are between 21 and 60 years old" },
+      { field: "age", operator: "lte", value: 60, label: "You are not older than 60" },
+      { field: "annualIncome", operator: "lt", value: 250000, label: "Family annual income below Rs 2.5 lakh" },
+    ],
+    eligibilitySummary:
+      "Married, divorced, abandoned or widowed women aged 21–60 residing in MP. Family income below Rs 2.5 lakh and not income-tax payer.",
+    popularity: 88,
+  },
+
+  {
+    slug: "maha-ladki-bahin",
+    name: "Mukhyamantri Majhi Ladki Bahin Yojana",
+    nameHindi: "मुख्यमंत्री माझी लाडकी बहीण योजना",
+    category: "women",
+    ministry: "Government of Maharashtra – Women & Child Development",
+    shortDescription:
+      "Rs 1,500 per month to eligible women aged 21–65 in Maharashtra.",
+    description:
+      "Mukhyamantri Majhi Ladki Bahin Yojana supports women in Maharashtra with a direct monthly transfer of Rs 1,500 to their bank accounts to enable economic self-reliance and family welfare.",
+    benefits: [
+      "Rs 1,500 per month direct credit to bank account (Rs 18,000/year)",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Bank passbook (Aadhaar-linked)",
+      "Ration card",
+      "Maharashtra domicile certificate",
+    ],
+    applySteps: [
+      "Apply on Nari Shakti Doot mobile app or at Anganwadi/Setu Suvidha Kendra",
+      "Submit Aadhaar, bank and domicile proof",
+      "Verification by district authorities",
+      "Monthly DBT after approval",
+    ],
+    officialLink: "https://ladakibahin.maharashtra.gov.in",
+    applicableStates: ["Maharashtra"],
+    tags: ["women", "maharashtra", "cash-transfer"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Maharashtra", label: "You live in Maharashtra" },
+      { field: "gender", operator: "eq", value: "female", label: "You are a woman" },
+      { field: "age", operator: "gte", value: 21, label: "You are between 21 and 65 years old" },
+      { field: "age", operator: "lte", value: 65, label: "You are not older than 65" },
+      { field: "annualIncome", operator: "lt", value: 250000, label: "Family annual income below Rs 2.5 lakh" },
+    ],
+    eligibilitySummary:
+      "Married, widowed, divorced, abandoned or single women aged 21–65 residing in Maharashtra, family income below Rs 2.5 lakh.",
+    popularity: 90,
+  },
+
+  {
+    slug: "odisha-subhadra",
+    name: "Subhadra Yojana",
+    nameHindi: "सुभद्रा योजना",
+    category: "women",
+    ministry: "Government of Odisha – Women & Child Development",
+    shortDescription:
+      "Rs 50,000 over 5 years (Rs 10,000/year in two instalments) to women aged 21–60 in Odisha.",
+    description:
+      "Subhadra Yojana credits Rs 5,000 each on Rakhi Purnima and International Women's Day (total Rs 10,000 per year) to eligible women aged 21–60 in Odisha for five years (total Rs 50,000). Top performing 100 women in each Gram Panchayat / Urban Local Body for digital transactions get an additional Rs 500.",
+    benefits: [
+      "Rs 10,000 per year (in two equal instalments) for 5 years",
+      "Additional Rs 500 incentive for top digital transaction performers",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Odisha residence proof",
+      "Bank passbook (Aadhaar-linked, DBT-enabled)",
+      "Ration card",
+    ],
+    applySteps: [
+      "Apply on subhadra.odisha.gov.in or at Mo Seva Kendra",
+      "Submit Aadhaar and bank details",
+      "Verification by district authorities",
+      "Receive Subhadra Card and benefits via DBT",
+    ],
+    officialLink: "https://subhadra.odisha.gov.in",
+    applicableStates: ["Odisha"],
+    tags: ["women", "odisha", "cash-transfer", "digital"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Odisha", label: "You live in Odisha" },
+      { field: "gender", operator: "eq", value: "female", label: "You are a woman" },
+      { field: "age", operator: "gte", value: 21, label: "You are between 21 and 60 years old" },
+      { field: "age", operator: "lte", value: 60, label: "You are not older than 60" },
+      { field: "annualIncome", operator: "lt", value: 250000, label: "Family annual income below Rs 2.5 lakh" },
+    ],
+    eligibilitySummary:
+      "Women aged 21–60 residing in Odisha, family income below Rs 2.5 lakh, not income-tax payer or government employee.",
+    popularity: 82,
+  },
+
+  {
+    slug: "rj-chiranjeevi",
+    name: "Mukhyamantri Ayushman Arogya Yojana (formerly Chiranjeevi)",
+    nameHindi: "मुख्यमंत्री आयुष्मान आरोग्य योजना",
+    category: "healthcare",
+    ministry: "Government of Rajasthan – Medical, Health & Family Welfare",
+    shortDescription:
+      "Cashless health insurance up to Rs 25 lakh per family per year for Rajasthan residents.",
+    description:
+      "Rajasthan's flagship health protection scheme provides cashless treatment up to Rs 25 lakh per family per year (including organ transplant cover) at over 1,750 empanelled public and private hospitals, integrating with AB-PMJAY for eligible families.",
+    benefits: [
+      "Cashless cover up to Rs 25 lakh per family per year",
+      "Includes Rs 10 lakh general + Rs 15 lakh critical illness cover",
+      "Pre-existing diseases covered from day 1",
+      "Free coverage for SECC, NFSA, small farmers, contractual workers",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Jan Aadhaar card",
+      "Bank passbook",
+    ],
+    applySteps: [
+      "Register on chiranjeevi.rajasthan.gov.in via Jan Aadhaar",
+      "Pay premium (Rs 850/year for general; free for eligible categories)",
+      "Receive policy and avail cashless treatment at empanelled hospital",
+    ],
+    officialLink: "https://chiranjeevi.rajasthan.gov.in",
+    applicableStates: ["Rajasthan"],
+    tags: ["healthcare", "insurance", "rajasthan", "cashless"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Rajasthan", label: "You are a Rajasthan resident with Jan Aadhaar" },
+    ],
+    eligibilitySummary:
+      "All Rajasthan residents with Jan Aadhaar. Free for SECC/NFSA/small farmers/contractual workers; Rs 850/year for others.",
+    popularity: 70,
+  },
+
+  {
+    slug: "tn-magalir-urimai",
+    name: "Kalaignar Magalir Urimai Thittam",
+    nameHindi: "कलैन्यर मगलिर उरिमई थिट्टम",
+    category: "women",
+    ministry: "Government of Tamil Nadu – Social Welfare & Women Empowerment",
+    shortDescription:
+      "Rs 1,000 per month basic income to woman head of every eligible household in Tamil Nadu.",
+    description:
+      "Kalaignar Magalir Urimai Thittam provides Rs 1,000 every month directly to the bank account of woman head of eligible households in Tamil Nadu, recognising the unpaid economic contribution of women.",
+    benefits: [
+      "Rs 1,000 per month basic income transfer",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Family card (ration card)",
+      "Bank passbook (Aadhaar-linked)",
+    ],
+    applySteps: [
+      "Apply at the camp organised by Tamil Nadu Government",
+      "Submit family card and Aadhaar",
+      "Verification and approval",
+      "Monthly DBT to bank account",
+    ],
+    officialLink: "https://kmut.tn.gov.in",
+    applicableStates: ["Tamil Nadu"],
+    tags: ["women", "tamil-nadu", "cash-transfer", "basic-income"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Tamil Nadu", label: "You live in Tamil Nadu" },
+      { field: "gender", operator: "eq", value: "female", label: "You are the woman head of the family card" },
+      { field: "age", operator: "gte", value: 21, label: "You are 21 years or older" },
+    ],
+    eligibilitySummary:
+      "Woman head of family on Tamil Nadu ration cards, aged 21+, with annual family income below specified limits and not income-tax payer.",
+    popularity: 85,
+  },
+
+  {
+    slug: "telangana-rythu-bandhu",
+    name: "Rythu Bandhu Scheme",
+    nameHindi: "रायतु बंधु",
+    category: "agriculture",
+    ministry: "Government of Telangana – Agriculture Department",
+    shortDescription:
+      "Rs 5,000 per acre per season (Rs 10,000/acre/year) investment support to farmers in Telangana.",
+    description:
+      "Rythu Bandhu, the Farmers' Investment Support Scheme, gives Rs 5,000 per acre per season directly to land-owning farmers in Telangana, before each Kharif and Rabi crop. The aim is to relieve farmers from debt burden for crop investment.",
+    benefits: [
+      "Rs 5,000 per acre per season (Rs 10,000/acre/year)",
+      "Direct credit to bank account before each crop season",
+      "No upper land ceiling currently applied",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Pattadar passbook / Land record",
+      "Bank passbook (Aadhaar-linked)",
+    ],
+    applySteps: [
+      "Get land records updated through Mee Seva / Tahsildar",
+      "Pattadar passbook is the basis of payment — no separate application",
+      "Receive cheque distribution at village or DBT to bank",
+    ],
+    officialLink: "https://rythubandhu.telangana.gov.in",
+    applicableStates: ["Telangana"],
+    tags: ["farmer", "telangana", "investment-support", "agriculture"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Telangana", label: "You live in Telangana" },
+      { field: "isFarmer", operator: "true", label: "You own agricultural land in Telangana" },
+    ],
+    eligibilitySummary:
+      "Land-owning farmers in Telangana with valid pattadar passbook.",
+    popularity: 80,
+  },
+
+  {
+    slug: "up-kanya-sumangala",
+    name: "Mukhyamantri Kanya Sumangala Yojana",
+    nameHindi: "मुख्यमंत्री कन्या सुमंगला योजना",
+    category: "women",
+    ministry: "Government of Uttar Pradesh – Women Welfare Department",
+    shortDescription:
+      "Up to Rs 25,000 in six instalments for the girl child from birth till graduation.",
+    description:
+      "Mukhyamantri Kanya Sumangala Yojana supports the girl child of UP families with annual income up to Rs 3 lakh in six instalments — at birth (Rs 5,000), one-year immunisation (Rs 2,000), class 1 admission (Rs 3,000), class 6 (Rs 3,000), class 9 (Rs 5,000) and on graduation/diploma admission (Rs 7,000). Total benefit Rs 25,000 (revised from Rs 15,000).",
+    benefits: [
+      "Rs 5,000 at birth + Rs 2,000 on one-year immunisation",
+      "Rs 3,000 each at class 1 and class 6 admission",
+      "Rs 5,000 at class 9 admission",
+      "Rs 7,000 at graduation / 2-year diploma admission",
+    ],
+    requiredDocuments: [
+      "Aadhaar of girl and parents",
+      "Birth certificate",
+      "Bank passbook of mother / guardian",
+      "Income certificate (annual income ≤ Rs 3 lakh)",
+      "UP residence proof",
+    ],
+    applySteps: [
+      "Register on mksy.up.gov.in",
+      "Submit applicable documents at each milestone",
+      "Verification by Block / District officials",
+      "DBT to bank account at each instalment",
+    ],
+    officialLink: "https://mksy.up.gov.in",
+    applicableStates: ["Uttar Pradesh"],
+    tags: ["girl-child", "education", "scholarship", "up"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Uttar Pradesh", label: "You live in Uttar Pradesh" },
+      { field: "gender", operator: "eq", value: "female", label: "Beneficiary is a girl" },
+      { field: "annualIncome", operator: "lte", value: 300000, label: "Family annual income up to Rs 3 lakh" },
+    ],
+    eligibilitySummary:
+      "Up to two girl children per family in UP with family income up to Rs 3 lakh.",
+    popularity: 78,
+  },
+
+  {
+    slug: "wb-lakshmir-bhandar",
+    name: "Lakshmir Bhandar",
+    nameHindi: "लक्ष्मीर भंडार",
+    category: "women",
+    ministry: "Government of West Bengal – Women & Child Development",
+    shortDescription:
+      "Rs 1,000 per month (Rs 1,200 for SC/ST) to women aged 25–60 in West Bengal.",
+    description:
+      "Lakshmir Bhandar provides monthly basic income of Rs 1,000 to general category women and Rs 1,200 to SC/ST women aged 25–60 years in West Bengal, transferred directly to their bank accounts.",
+    benefits: [
+      "Rs 1,000/month for general category women",
+      "Rs 1,200/month for SC/ST women",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Bank passbook (single account in woman's name)",
+      "Swasthya Sathi card",
+      "Caste certificate (for SC/ST)",
+    ],
+    applySteps: [
+      "Apply at Duare Sarkar camp or Block / Municipality office",
+      "Submit Aadhaar, Swasthya Sathi and bank details",
+      "Verification by district authorities",
+      "Monthly DBT after approval",
+    ],
+    officialLink: "https://socialsecurity.wb.gov.in",
+    applicableStates: ["West Bengal"],
+    tags: ["women", "west-bengal", "cash-transfer"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "West Bengal", label: "You live in West Bengal" },
+      { field: "gender", operator: "eq", value: "female", label: "You are a woman" },
+      { field: "age", operator: "gte", value: 25, label: "You are between 25 and 60 years old" },
+      { field: "age", operator: "lte", value: 60, label: "You are not older than 60" },
+    ],
+    eligibilitySummary:
+      "Women aged 25–60 residing in West Bengal with Swasthya Sathi card. Higher amount for SC/ST.",
+    popularity: 88,
+  },
+
+  {
+    slug: "wb-kanyashree",
+    name: "Kanyashree Prakalpa",
+    nameHindi: "कन्याश्री प्रकल्प",
+    category: "scholarship",
+    ministry: "Government of West Bengal – Women & Child Development",
+    shortDescription:
+      "Annual scholarship + one-time Rs 25,000 grant to encourage girls' education and delay marriage.",
+    description:
+      "Kanyashree Prakalpa is a UN award-winning scheme for girls aged 13–18 (annual scholarship K1) and a one-time grant of Rs 25,000 (K2) on turning 18 if still unmarried and continuing education. There is also K3 — assistance for postgraduate students in selected subjects.",
+    benefits: [
+      "K1 — Rs 1,000 annual scholarship for girls aged 13–18 in classes 8–12",
+      "K2 — One-time Rs 25,000 on turning 18 if unmarried and in education",
+      "K3 — Monthly stipend for PG students in selected subjects",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Bank passbook (single account in girl's name)",
+      "School / college certificate of enrolment",
+      "Unmarried declaration",
+    ],
+    applySteps: [
+      "Apply through school / college using Kanyashree forms K1 and K2",
+      "School/college forwards to district office",
+      "Verification and DBT to girl's bank account",
+    ],
+    officialLink: "https://wbkanyashree.gov.in",
+    applicableStates: ["West Bengal"],
+    tags: ["girl-child", "scholarship", "west-bengal", "education"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "West Bengal", label: "You live in West Bengal" },
+      { field: "gender", operator: "eq", value: "female", label: "You are an unmarried girl" },
+      { field: "age", operator: "gte", value: 13, label: "You are 13 years or older" },
+      { field: "annualIncome", operator: "lte", value: 120000, label: "Family income up to Rs 1.2 lakh per year (K1)" },
+      { field: "isStudent", operator: "true", label: "You are a student" },
+    ],
+    eligibilitySummary:
+      "Unmarried girls aged 13–18 (K1) or turning 18 still studying (K2), residing in West Bengal.",
+    popularity: 80,
+  },
+
+  {
+    slug: "jk-pmsss",
+    name: "PM Special Scholarship Scheme for J&K and Ladakh",
+    nameHindi: "पीएम विशेष छात्रवृत्ति योजना",
+    category: "scholarship",
+    ministry: "AICTE – Ministry of Education",
+    shortDescription:
+      "Up to Rs 1.25 lakh per year for J&K/Ladakh students pursuing higher education outside the UT.",
+    description:
+      "PMSSS provides scholarships to students from J&K and Ladakh to pursue General, Engineering and Medical degree courses outside their home UT. It covers tuition fee (up to Rs 1.25 lakh / Rs 3 lakh / Rs 6 lakh per annum based on course type) plus academic and maintenance allowance of Rs 1 lakh per annum.",
+    benefits: [
+      "Tuition fee — up to Rs 1.25 lakh (general) / Rs 3 lakh (professional) / Rs 6 lakh (medical) per year",
+      "Maintenance and academic allowance of Rs 1 lakh per year",
+      "Admission in 250+ AICTE-approved institutions across India",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "J&K / Ladakh domicile certificate",
+      "Class 12 mark sheet",
+      "Income certificate (family income ≤ Rs 8 lakh)",
+      "Bank passbook",
+    ],
+    applySteps: [
+      "Register on aicte-pmsss.in within prescribed dates",
+      "Fill course preferences and upload documents",
+      "Counselling and seat allotment",
+      "Receive scholarship in bank account each semester",
+    ],
+    officialLink: "https://www.aicte-pmsss.in",
+    applicableStates: ["Jammu and Kashmir", "Ladakh"],
+    tags: ["scholarship", "jk", "ladakh", "higher-education"],
+    eligibilityRules: [
+      { field: "state", operator: "in", value: ["Jammu and Kashmir", "Ladakh"], label: "You are a J&K / Ladakh domicile" },
+      { field: "annualIncome", operator: "lte", value: 800000, label: "Family income up to Rs 8 lakh per year" },
+      { field: "isStudent", operator: "true", label: "You are a student in higher education" },
+    ],
+    eligibilitySummary:
+      "J&K and Ladakh domicile students who passed Class 12 with family income ≤ Rs 8 lakh, pursuing UG outside the UT.",
+    popularity: 60,
+  },
+
+  {
+    slug: "punjab-aam-aadmi-clinics",
+    name: "Aam Aadmi Clinics – Punjab",
+    nameHindi: "आम आदमी क्लीनिक",
+    category: "healthcare",
+    ministry: "Government of Punjab – Health & Family Welfare",
+    shortDescription:
+      "Free OPD consultation, 80+ medicines and 38 lab tests at neighbourhood clinics across Punjab.",
+    description:
+      "Aam Aadmi Clinics provide free primary healthcare — OPD consultation, 80+ essential medicines and 38 diagnostic tests — to all residents of Punjab in their neighbourhood. Clinics operate in both urban and rural areas.",
+    benefits: [
+      "Free OPD consultation",
+      "Free 80+ essential medicines",
+      "Free 38 routine diagnostic tests",
+    ],
+    requiredDocuments: [
+      "Any photo ID (no specific document mandatory)",
+    ],
+    applySteps: [
+      "Visit nearest Aam Aadmi Clinic",
+      "Register at the front desk",
+      "Get consultation, medicines and lab tests free of cost",
+    ],
+    officialLink: "https://pbhealth.gov.in",
+    applicableStates: ["Punjab"],
+    tags: ["healthcare", "punjab", "opd", "free-medicines"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Punjab", label: "You live in Punjab" },
+    ],
+    eligibilitySummary:
+      "Any resident of Punjab — urban or rural — can walk in.",
+    popularity: 65,
+  },
+
+  {
+    slug: "uk-vatsalya",
+    name: "Mukhyamantri Vatsalya Yojana",
+    nameHindi: "मुख्यमंत्री वात्सल्य योजना",
+    category: "other",
+    ministry: "Government of Uttarakhand – Women Empowerment & Child Development",
+    shortDescription:
+      "Rs 3,000 monthly pension and free education up to graduation to children orphaned by COVID/other calamities.",
+    description:
+      "Mukhyamantri Vatsalya Yojana provides monthly assistance of Rs 3,000 till age 21 plus free education till graduation, free ration and reservation in government jobs to children of Uttarakhand who lost both parents (or sole earning parent) due to COVID-19 or other reasons.",
+    benefits: [
+      "Rs 3,000 per month till the child turns 21",
+      "Free education up to graduation",
+      "Free ration",
+      "5% horizontal reservation in government jobs",
+    ],
+    requiredDocuments: [
+      "Aadhaar card of child and guardian",
+      "Death certificate of parent(s)",
+      "Uttarakhand domicile certificate",
+      "Bank account details of child / guardian",
+    ],
+    applySteps: [
+      "Apply at District Probation Officer's office",
+      "Submit death certificates and domicile",
+      "Verification and approval by District Magistrate",
+      "Monthly DBT and education benefits activated",
+    ],
+    officialLink: "https://wecd.uk.gov.in",
+    applicableStates: ["Uttarakhand"],
+    tags: ["orphan", "child", "uttarakhand", "education"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Uttarakhand", label: "Child resides in Uttarakhand" },
+      { field: "age", operator: "lte", value: 21, label: "Child is up to 21 years old" },
+    ],
+    eligibilitySummary:
+      "Children of Uttarakhand who have lost both parents or sole earning parent due to COVID-19 or other reasons.",
+    popularity: 55,
+  },
+
+  {
+    slug: "sikkim-aama-sahayata",
+    name: "Aama Sahayata Yojana",
+    nameHindi: "आमा सहायता योजना",
+    category: "women",
+    ministry: "Government of Sikkim – Women & Child Welfare",
+    shortDescription:
+      "Rs 20,000 per year to non-working housewives in Sikkim.",
+    description:
+      "Aama Sahayata Yojana provides Rs 20,000 every year to non-working mothers of Sikkim to recognise their domestic contribution and reduce out-of-pocket expenditure on household needs.",
+    benefits: [
+      "Rs 20,000 per year credited to bank account",
+    ],
+    requiredDocuments: [
+      "Aadhaar card",
+      "Sikkim Subject Certificate / COI",
+      "Marriage certificate",
+      "Bank passbook",
+    ],
+    applySteps: [
+      "Apply at Block Administrative Centre or DDA office",
+      "Submit COI/SSC, marriage and bank details",
+      "Verification and approval",
+      "Annual credit in bank account",
+    ],
+    officialLink: "https://sikkim.gov.in",
+    applicableStates: ["Sikkim"],
+    tags: ["women", "sikkim", "housewife", "annual-grant"],
+    eligibilityRules: [
+      { field: "state", operator: "eq", value: "Sikkim", label: "You are a Sikkim resident with COI/SSC" },
+      { field: "gender", operator: "eq", value: "female", label: "You are a married woman / housewife" },
+      { field: "employmentStatus", operator: "in", value: ["unemployed", "self_employed"], label: "You are not in regular employment" },
+    ],
+    eligibilitySummary:
+      "Married, non-working mothers in Sikkim holding valid COI or Sikkim Subject Certificate.",
+    popularity: 50,
+  },
 ];
 
 async function main() {
@@ -1627,6 +3232,8 @@ async function main() {
       eligibilityRules: s.eligibilityRules,
       eligibilitySummary: s.eligibilitySummary,
       popularity: s.popularity,
+      isCentralScheme: s.applicableStates.length === 0 ? 1 : 0,
+      lastUpdated: s.lastUpdated ?? DEFAULT_LAST_UPDATED,
     });
   }
   console.log("Seed complete.");

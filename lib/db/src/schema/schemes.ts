@@ -51,6 +51,8 @@ export const schemesTable = pgTable("schemes", {
     .default([]),
   eligibilitySummary: text("eligibility_summary").notNull(),
   popularity: integer("popularity").notNull().default(0),
+  isCentralScheme: integer("is_central_scheme").notNull().default(1),
+  lastUpdated: text("last_updated"),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),

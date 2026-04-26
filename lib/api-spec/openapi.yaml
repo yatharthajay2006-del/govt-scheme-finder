@@ -341,6 +341,12 @@ components:
         popularity:
           type: integer
           description: Higher = more popular. Used for ordering popular schemes.
+        isCentralScheme:
+          type: boolean
+          description: True if this is a Central (Government of India) scheme; false if a state-level scheme.
+        lastUpdated:
+          type: ["string", "null"]
+          description: ISO date string when the scheme info was last verified by editors.
         createdAt:
           type: string
           format: date-time
@@ -409,6 +415,10 @@ components:
           type: string
         popularity:
           type: integer
+        isCentralScheme:
+          type: ["boolean", "null"]
+        lastUpdated:
+          type: ["string", "null"]
       required:
         - slug
         - name

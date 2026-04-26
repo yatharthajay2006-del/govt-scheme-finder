@@ -34,5 +34,12 @@ export interface Scheme {
   eligibilitySummary: string;
   /** Higher = more popular. Used for ordering popular schemes. */
   popularity: number;
+  /** True if this is a Central (Government of India) scheme; false if a state-level scheme. */
+  isCentralScheme?: boolean;
+  /**
+   * ISO date string when the scheme info was last verified by editors.
+   * @nullable
+   */
+  lastUpdated?: string | null;
   createdAt: Date;
 }

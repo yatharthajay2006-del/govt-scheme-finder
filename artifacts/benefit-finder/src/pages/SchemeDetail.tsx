@@ -83,10 +83,30 @@ export function SchemeDetail() {
               </div>
             )}
             <div className="flex items-center gap-1.5">
-              <span className="text-xs uppercase tracking-wider bg-black/5 dark:bg-white/10 px-2 py-1 rounded">
-                {scheme.applicableStates.length === 0 ? "All India" : `${scheme.applicableStates.length} States`}
+              <span
+                className={
+                  scheme.isCentralScheme
+                    ? "text-xs font-semibold uppercase tracking-wider bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300 px-2.5 py-1 rounded-full border border-indigo-200 dark:border-indigo-800/50"
+                    : "text-xs font-semibold uppercase tracking-wider bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300 px-2.5 py-1 rounded-full border border-orange-200 dark:border-orange-800/50"
+                }
+              >
+                {scheme.isCentralScheme
+                  ? "Central Govt Scheme"
+                  : `State Scheme · ${scheme.applicableStates.join(", ")}`}
               </span>
             </div>
+            {scheme.lastUpdated && (
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <span className="opacity-70">Last verified:</span>
+                <span className="font-semibold text-foreground/80">
+                  {new Date(scheme.lastUpdated).toLocaleDateString("en-IN", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })}
+                </span>
+              </div>
+            )}
           </div>
 
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-8 max-w-3xl">

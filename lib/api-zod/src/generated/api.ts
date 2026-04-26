@@ -102,6 +102,18 @@ export const ListSchemesResponseItem = zod.object({
   popularity: zod
     .number()
     .describe("Higher = more popular. Used for ordering popular schemes."),
+  isCentralScheme: zod
+    .boolean()
+    .optional()
+    .describe(
+      "True if this is a Central (Government of India) scheme; false if a state-level scheme.",
+    ),
+  lastUpdated: zod
+    .string()
+    .nullish()
+    .describe(
+      "ISO date string when the scheme info was last verified by editors.",
+    ),
   createdAt: zod.coerce.date(),
 });
 export const ListSchemesResponse = zod.array(ListSchemesResponseItem);
@@ -172,6 +184,8 @@ export const CreateSchemeBody = zod.object({
   ),
   eligibilitySummary: zod.string(),
   popularity: zod.number().optional(),
+  isCentralScheme: zod.boolean().nullish(),
+  lastUpdated: zod.string().nullish(),
 });
 
 export const CreateSchemeResponse = zod.object({
@@ -244,6 +258,18 @@ export const CreateSchemeResponse = zod.object({
   popularity: zod
     .number()
     .describe("Higher = more popular. Used for ordering popular schemes."),
+  isCentralScheme: zod
+    .boolean()
+    .optional()
+    .describe(
+      "True if this is a Central (Government of India) scheme; false if a state-level scheme.",
+    ),
+  lastUpdated: zod
+    .string()
+    .nullish()
+    .describe(
+      "ISO date string when the scheme info was last verified by editors.",
+    ),
   createdAt: zod.coerce.date(),
 });
 
@@ -321,6 +347,18 @@ export const ListPopularSchemesResponseItem = zod.object({
   popularity: zod
     .number()
     .describe("Higher = more popular. Used for ordering popular schemes."),
+  isCentralScheme: zod
+    .boolean()
+    .optional()
+    .describe(
+      "True if this is a Central (Government of India) scheme; false if a state-level scheme.",
+    ),
+  lastUpdated: zod
+    .string()
+    .nullish()
+    .describe(
+      "ISO date string when the scheme info was last verified by editors.",
+    ),
   createdAt: zod.coerce.date(),
 });
 export const ListPopularSchemesResponse = zod.array(
@@ -404,6 +442,18 @@ export const GetSchemeResponse = zod.object({
   popularity: zod
     .number()
     .describe("Higher = more popular. Used for ordering popular schemes."),
+  isCentralScheme: zod
+    .boolean()
+    .optional()
+    .describe(
+      "True if this is a Central (Government of India) scheme; false if a state-level scheme.",
+    ),
+  lastUpdated: zod
+    .string()
+    .nullish()
+    .describe(
+      "ISO date string when the scheme info was last verified by editors.",
+    ),
   createdAt: zod.coerce.date(),
 });
 
@@ -477,6 +527,8 @@ export const UpdateSchemeBody = zod.object({
   ),
   eligibilitySummary: zod.string(),
   popularity: zod.number().optional(),
+  isCentralScheme: zod.boolean().nullish(),
+  lastUpdated: zod.string().nullish(),
 });
 
 export const UpdateSchemeResponse = zod.object({
@@ -549,6 +601,18 @@ export const UpdateSchemeResponse = zod.object({
   popularity: zod
     .number()
     .describe("Higher = more popular. Used for ordering popular schemes."),
+  isCentralScheme: zod
+    .boolean()
+    .optional()
+    .describe(
+      "True if this is a Central (Government of India) scheme; false if a state-level scheme.",
+    ),
+  lastUpdated: zod
+    .string()
+    .nullish()
+    .describe(
+      "ISO date string when the scheme info was last verified by editors.",
+    ),
   createdAt: zod.coerce.date(),
 });
 
@@ -700,6 +764,18 @@ export const CheckEligibilityResponse = zod.object({
           .number()
           .describe(
             "Higher = more popular. Used for ordering popular schemes.",
+          ),
+        isCentralScheme: zod
+          .boolean()
+          .optional()
+          .describe(
+            "True if this is a Central (Government of India) scheme; false if a state-level scheme.",
+          ),
+        lastUpdated: zod
+          .string()
+          .nullish()
+          .describe(
+            "ISO date string when the scheme info was last verified by editors.",
           ),
         createdAt: zod.coerce.date(),
       }),

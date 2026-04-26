@@ -47,7 +47,19 @@ export function SchemeCard({ scheme, matchedReasons, matchScore, showSaveButton 
     <Card className="h-full flex flex-col overflow-hidden transition-all duration-200 hover:shadow-md border-border/50 group bg-card">
       <CardHeader className="p-5 pb-4 space-y-3">
         <div className="flex justify-between items-start gap-2">
-          <CategoryBadge category={scheme.category} />
+          <div className="flex items-center gap-2 flex-wrap">
+            <CategoryBadge category={scheme.category} />
+            <span
+              className={
+                scheme.isCentralScheme
+                  ? "text-[10px] font-semibold uppercase tracking-wider bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300 px-2 py-0.5 rounded-full"
+                  : "text-[10px] font-semibold uppercase tracking-wider bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300 px-2 py-0.5 rounded-full"
+              }
+              title={scheme.isCentralScheme ? "Central Government Scheme" : `State Scheme — ${scheme.applicableStates.join(", ")}`}
+            >
+              {scheme.isCentralScheme ? "Central" : scheme.applicableStates[0] ?? "State"}
+            </span>
+          </div>
           {showSaveButton && (
             <button 
               onClick={toggleSave}
